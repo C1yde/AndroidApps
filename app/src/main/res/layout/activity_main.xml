@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/one"
+        android:text="@string/one"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/two"
+        android:text="@string/two"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/three"
+        android:text="@string/three"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/four"
+        android:text="@string/four"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/five"
+        android:text="@string/five"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/six"
+        android:text="@string/six"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/seven"
+        android:text="@string/seven"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/eight"
+        android:text="@string/eight"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/nine"
+        android:text="@string/nine"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/plus"
+        android:text="@string/plus"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/minus"
+        android:text="@string/minus"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/equally"
+        android:text="@string/equally"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+</TableLayout>

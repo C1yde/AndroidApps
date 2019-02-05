@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:columnCount="3"
+    android:rowCount="5"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.example.pokemongoalpha.SquareImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/ic_pikachu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.example.pokemongoalpha.SquareImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/ic_charmander"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.example.pokemongoalpha.SquareImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/ic_bullbasaur"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.example.pokemongoalpha.SquareImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/ic_weedle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.example.pokemongoalpha.SquareImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/ic_rattata"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.example.pokemongoalpha.SquareImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/ic_psyduck"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.example.pokemongoalpha.SquareImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/ic_meowth"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.example.pokemongoalpha.SquareImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/ic_pidgey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.example.pokemongoalpha.SquareImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/ic_bellsprout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.example.pokemongoalpha.SquareImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/ic_dratini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.example.pokemongoalpha.SquareImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/ic_caterpie"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.example.pokemongoalpha.SquareImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/ic_mew"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</GridLayout>

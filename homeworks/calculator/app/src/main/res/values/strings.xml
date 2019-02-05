@@ -14,4 +14,7 @@
     <string name="minus">-</string>
     <string name="equally">=</string>
     <string name="main_text">0</string>
+    <string name="clear">C</string>
+    <string name="operatorTag">operator</string>
+    <string name="numberTag">number</string>
 </resources>

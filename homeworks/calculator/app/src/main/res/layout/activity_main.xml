@@ -28,7 +28,8 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_span="3"/>
     </TableRow>
 
     <TableRow
@@ -38,7 +39,7 @@
 
         <Button
             android:id="@+id/one"
-            android:tag="number"
+            android:tag="@string/numberTag"
             android:text="@string/one"
             android:textStyle="italic"
             android:textSize="30sp"
@@ -48,7 +49,7 @@
             android:layout_height="match_parent"/>
         <Button
             android:id="@+id/two"
-            android:tag="number"
+            android:tag="@string/numberTag"
             android:text="@string/two"
             android:textStyle="italic"
             android:textSize="30sp"
@@ -58,7 +59,7 @@
             android:layout_height="match_parent" />
         <Button
             android:id="@+id/three"
-            android:tag="number"
+            android:tag="@string/numberTag"
             android:text="@string/three"
             android:textStyle="italic"
             android:textSize="30sp"
@@ -75,7 +76,7 @@
 
         <Button
             android:id="@+id/four"
-            android:tag="number"
+            android:tag="@string/numberTag"
             android:text="@string/four"
             android:textStyle="italic"
             android:textSize="30sp"
@@ -85,7 +86,7 @@
             android:layout_height="match_parent" />
         <Button
             android:id="@+id/five"
-            android:tag="number"
+            android:tag="@string/numberTag"
             android:text="@string/five"
             android:textStyle="italic"
             android:textSize="30sp"
@@ -95,7 +96,7 @@
             android:layout_height="match_parent" />
         <Button
             android:id="@+id/six"
-            android:tag="number"
+            android:tag="@string/numberTag"
             android:text="@string/six"
             android:textStyle="italic"
             android:textSize="30sp"
@@ -112,7 +113,7 @@
 
         <Button
             android:id="@+id/seven"
-            android:tag="number"
+            android:tag="@string/numberTag"
             android:text="@string/seven"
             android:textStyle="italic"
             android:textSize="30sp"
@@ -122,7 +123,7 @@
             android:layout_height="match_parent" />
         <Button
             android:id="@+id/eight"
-            android:tag="number"
+            android:tag="@string/numberTag"
             android:text="@string/eight"
             android:textStyle="italic"
             android:textSize="30sp"
@@ -132,7 +133,7 @@
             android:layout_height="match_parent" />
         <Button
             android:id="@+id/nine"
-            android:tag="number"
+            android:tag="@string/numberTag"
             android:text="@string/nine"
             android:textStyle="italic"
             android:textSize="30sp"
@@ -149,6 +150,7 @@
 
         <Button
             android:id="@+id/plus"
+            android:tag="@string/operatorTag"
             android:text="@string/plus"
             android:textStyle="italic"
             android:textSize="30sp"
@@ -158,7 +160,7 @@
             android:layout_height="match_parent" />
         <Button
             android:id="@+id/zero"
-            android:tag="number"
+            android:tag="@string/numberTag"
             android:text="@string/zero"
             android:textStyle="italic"
             android:textSize="30sp"
@@ -168,6 +170,7 @@
             android:layout_height="match_parent" />
         <Button
             android:id="@+id/minus"
+            android:tag="@string/operatorTag"
             android:text="@string/minus"
             android:textStyle="italic"
             android:textSize="30sp"
@@ -185,7 +188,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <TextView
+        <Button
+            android:id="@+id/clear"
+            android:text="@string/clear"
+            android:textStyle="italic"
+            android:textSize="30sp"
+            android:background="@drawable/bottom_buttons_background_selector"
+            android:textColor="@drawable/button_text_color_selector"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <Button
@@ -193,7 +202,7 @@
             android:text="@string/equally"
             android:textStyle="italic"
             android:textSize="30sp"
-            android:background="@drawable/equally_button_background_selector"
+            android:background="@drawable/bottom_buttons_background_selector"
             android:textColor="@drawable/button_text_color_selector"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

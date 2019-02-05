@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (result.SecondNumber != null)
+                if (result.Operator != null)
                 {
                     long calculation;
                     if (result.Operator.equals(getString(R.string.plus)))

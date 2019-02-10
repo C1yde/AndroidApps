@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button b = (Button)v;
-                String buttonText = b.getText().toString();
+                Button button = (Button)v;
+                String buttonText = button.getText().toString();
                 result.FirstNumber = main_text.getText().toString();
                 result.Operator = buttonText;
             }

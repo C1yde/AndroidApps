@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="number_row_weight">1</integer>
+    <integer name="text_vies_span">3</integer>
+</resources>

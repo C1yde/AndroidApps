@@ -1,5 +1,6 @@
 package com.example.pokemongoalpha;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
     private SquareImageView selectedImage;
+    private Integer maxSelectCount;
+    private Integer currentSelectIndex = 0;
+    private boolean isButtonClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
         TableLayout tableLayout = findViewById(R.id.table_layout);
 
-        int columnCount = 3;
-        int rowCount = 4;
+        Resources resources = getResources();
+        int columnCount = resources.getInteger(R.integer.columnCount);
+        int rowCount = resources.getInteger(R.integer.rowCount);
+        maxSelectCount = columnCount * rowCount;
         int imageIndex = 0;
         for(int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
             // New tableRow
@@ -51,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
                 imageView.setId(imageIndex);
                 imagesDict.append(imageIndex, imageSrc);
-                //imageView.setImageResource(imageSrc);
 
                 SetOnImageClick(imageView, imagesDict);
 
@@ -66,9 +72,15 @@ public class MainActivity extends AppCompatActivity {
                 final SquareImageView castedView = (SquareImageView)view;
                 int imageSrc = imagesDict.get(castedView.getId());
 
+                if (isButtonClicked) {
+                    return;
+                }
+
+                isButtonClicked = true;
                 if (selectedImage == null) {
                     castedView.setImageResource(imageSrc);
                     selectedImage = castedView;
+                    isButtonClicked = false;
                 }
                 else {
                     castedView.setImageResource(imageSrc);
@@ -81,11 +93,21 @@ public class MainActivity extends AppCompatActivity {
                                 castedView.setImageResource(0);
                                 selectedImage.setImageResource(0);
                                 selectedImage = null;
+                                isButtonClicked = false;
                             }
                         }, 500);
                     }
                     else{
                         selectedImage = null;
+                        isButtonClicked = false;
+
+                        currentSelectIndex += 2;
+
+                        if (maxSelectCount.equals(currentSelectIndex)){
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    "Поздравляем! Вы нашли всех покемонов!", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
                     }
                 }
             }
@@ -95,15 +117,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private SquareImageView CreateImageView() {
+        Resources resources = getResources();
         SquareImageView imageView = new SquareImageView(this);
         imageView.setBackgroundResource(R.drawable.image_standard_style);
 
         TableRow.LayoutParams rowLayoutParam = new TableRow.LayoutParams();
+        int rowMargin = resources.getInteger(R.integer.image_view_margin);
         rowLayoutParam.height = ViewGroup.LayoutParams.MATCH_PARENT;
         rowLayoutParam.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        rowLayoutParam.setMargins(5, 5, 5, 5);
+        rowLayoutParam.setMargins(rowMargin, rowMargin, rowMargin, rowMargin);
         rowLayoutParam.gravity = Gravity.CENTER;
-        rowLayoutParam.weight = 1;
+        rowLayoutParam.weight = resources.getInteger(R.integer.row_layout_weight);
 
         imageView.setLayoutParams(rowLayoutParam);
 

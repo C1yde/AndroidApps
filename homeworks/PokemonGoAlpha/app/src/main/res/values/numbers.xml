@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="image_view_margin">5</integer>
+    <integer name="columnCount">3</integer>
+    <integer name="rowCount">4</integer>
+    <integer name="row_layout_weight">1</integer>
+</resources>

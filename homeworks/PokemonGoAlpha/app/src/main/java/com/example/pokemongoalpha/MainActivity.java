@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 final SquareImageView castedView = (SquareImageView)view;
                 int imageSrc = imagesDict.get(castedView.getId());
 
-                if (isButtonClicked) {
+                if (isButtonClicked || castedView.getDrawable() != null) {
                     return;
                 }
 
@@ -83,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
                     isButtonClicked = false;
                 }
                 else {
+                    if (castedView.equals(selectedImage)){
+                        isButtonClicked = false;
+                        return;
+                    }
+
                     castedView.setImageResource(imageSrc);
 
                     int selectedImageId = imagesDict.get(selectedImage.getId());

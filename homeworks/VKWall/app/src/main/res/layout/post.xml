@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textSize="@dimen/common_text_size"
-                android:layout_marginEnd="@dimen/text_view_margin"/>
+                android:layout_marginEnd="@dimen/media_text_view_margin"/>
 
             <ImageButton
                 android:id="@+id/commentButton"
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textSize="@dimen/common_text_size"
-                android:layout_marginEnd="@dimen/text_view_margin"/>
+                android:layout_marginEnd="@dimen/media_text_view_margin"/>
 
             <ImageButton
                 android:id="@+id/shareButton"

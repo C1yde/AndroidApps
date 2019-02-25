@@ -2,6 +2,7 @@ package com.example.vkwall;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         TextView username;
         TextView postDate;
         TextView postText;
+        TextView likeText;
+        TextView commentText;
+        TextView shareText;
         ImageView avatar;
         ImageView postImage;
         
@@ -32,6 +36,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             postDate = itemView.findViewById(R.id.postDate);
             postText = itemView.findViewById(R.id.postText);
             postImage = itemView.findViewById(R.id.postImage);
+            likeText = itemView.findViewById(R.id.likeText);
+            commentText = itemView.findViewById(R.id.commentText);
+            shareText = itemView.findViewById(R.id.shareText);
         }
     }
 
@@ -46,11 +53,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(@NonNull PostViewHolder postViewHolder, int i) {
         Post currentItem = mPosts.get(i);
 
-        //postViewHolder.avatar.setImageResource(currentItem.avatar_url);
-        //postViewHolder.postImage.setImageResource(currentItem.post_image);
-        postViewHolder.username.setText(currentItem.username);
-        postViewHolder.postText.setText(currentItem.post_text);
-        postViewHolder.postDate.setText(new Date(currentItem.post_date).toString());
+        currentItem.setAvatar(postViewHolder.avatar);
+        currentItem.setPostImage(postViewHolder.postImage);
+        postViewHolder.username.setText(currentItem.getUsername());
+        postViewHolder.postText.setText(currentItem.getPostText());
+        postViewHolder.postDate.setText(currentItem.getPostDate());
+        postViewHolder.likeText.setText(currentItem.getLikeText());
+        postViewHolder.commentText.setText(currentItem.getCommentText());
+        postViewHolder.shareText.setText(currentItem.getShareText());
     }
 
     @Override

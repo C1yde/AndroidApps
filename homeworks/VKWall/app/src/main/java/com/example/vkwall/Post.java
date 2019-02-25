@@ -76,13 +76,23 @@ public class Post implements Parcelable {
         dest.writeByte((byte) (is_user_like == null ? 0 : is_user_like ? 1 : 2));
     }
 
+    void changeLike(){
+        if (this.is_user_like){
+            this.likes_count--;
+        } else{
+            this.likes_count++;
+        }
+
+        this.is_user_like = !this.is_user_like;
+    }
+
     void setPostImage(ImageView imageView){
         Picasso.get().load(this.post_image).into(imageView);
     }
 
-    void setAvatar(ImageView imageView){
-        Picasso.get().load(this.avatar_url).transform(new CircleTransform()).into(imageView);
-    }
+    void setAvatar(ImageView imageView){ Picasso.get().load(this.avatar_url).transform(new CircleTransform()).into(imageView); }
+
+    Integer getLikeImage(){ return this.is_user_like ? R.drawable.ic_like_pressed : R.drawable.ic_like_standard; }
 
     String getCommentText(){
         return String.format(Locale.getDefault(),"%d", this.comments_count);

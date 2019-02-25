@@ -6,6 +6,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,11 +16,11 @@ import java.util.Date;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
     private ArrayList<Post> mPosts;
 
-    public PostAdapter(ArrayList<Post> posts) {
+    PostAdapter(ArrayList<Post> posts) {
         mPosts = posts;
     }
 
-    public static class PostViewHolder extends RecyclerView.ViewHolder {
+    static class PostViewHolder extends RecyclerView.ViewHolder {
         TextView username;
         TextView postDate;
         TextView postText;
@@ -28,8 +29,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         TextView shareText;
         ImageView avatar;
         ImageView postImage;
+        ImageButton likeButton;
         
-        public PostViewHolder(View itemView) {
+        PostViewHolder(View itemView) {
             super(itemView);
             avatar = itemView.findViewById(R.id.avatar);
             username = itemView.findViewById(R.id.username);
@@ -39,6 +41,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             likeText = itemView.findViewById(R.id.likeText);
             commentText = itemView.findViewById(R.id.commentText);
             shareText = itemView.findViewById(R.id.shareText);
+            likeButton = itemView.findViewById(R.id.likeButton);
         }
     }
 
@@ -50,8 +53,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostViewHolder postViewHolder, int i) {
-        Post currentItem = mPosts.get(i);
+    public void onBindViewHolder(@NonNull final PostViewHolder postViewHolder, int i) {
+        final Post currentItem = mPosts.get(i);
 
         currentItem.setAvatar(postViewHolder.avatar);
         currentItem.setPostImage(postViewHolder.postImage);
@@ -61,6 +64,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         postViewHolder.likeText.setText(currentItem.getLikeText());
         postViewHolder.commentText.setText(currentItem.getCommentText());
         postViewHolder.shareText.setText(currentItem.getShareText());
+        postViewHolder.likeButton.setImageResource(currentItem.getLikeImage());
+
+        View.OnClickListener likeClickListener = new View.OnClickListener() {
+            public void onClick(View view) {
+                ImageButton button = (ImageButton)view;
+                currentItem.changeLike();
+                button.setImageResource(currentItem.getLikeImage());
+                postViewHolder.likeText.setText(currentItem.getLikeText());
+
+            }
+        };
+        postViewHolder.likeButton.setOnClickListener(likeClickListener);
     }
 
     @Override

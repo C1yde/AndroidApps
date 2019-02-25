@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardMaxElevation="1dp"
-    app:cardElevation="1dp"
-    app:cardCornerRadius="5dp"
+    app:cardMaxElevation="@dimen/card_elevation"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp">
+        android:layout_margin="@dimen/relative_layout_margin">
 
         <ImageView
             android:id="@+id/avatar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="2dp"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
+            android:padding="@dimen/avatar_padding"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -27,9 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/avatar"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/title_text_margin"
             android:textColor="@android:color/black"
-            android:textSize="20sp"
+            android:textSize="@dimen/common_text_size"
             android:textStyle="bold" />
 
         <TextView
@@ -38,16 +38,16 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/username"
             android:layout_toEndOf="@+id/avatar"
-            android:layout_marginStart="8dp"
-            android:textSize="15sp" />
+            android:layout_marginStart="@dimen/title_text_margin"
+            android:textSize="@dimen/common_text_size" />
 
         <TextView
             android:id="@+id/postText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/avatar"
-            android:textSize="15sp"
-            android:layout_margin="5dp"/>
+            android:textSize="@dimen/common_text_size"
+            android:layout_margin="@dimen/text_view_margin"/>
 
         <ImageView
             android:id="@+id/postImage"
@@ -63,7 +63,7 @@
             android:layout_height="3dp"
             android:layout_below="@+id/postImage"
             android:background="?android:attr/listDivider"
-            android:layout_margin="15dp"/>
+            android:layout_marginTop="@dimen/divide_top_margin"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -73,10 +73,10 @@
 
             <ImageButton
                 android:id="@+id/likeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_like"
-                android:background="@color/white"
+                android:layout_width="@dimen/media_buttons_size"
+                android:layout_height="@dimen/media_buttons_size"
+                android:src="@drawable/ic_like_standard"
+                android:background="@color/colorWhite"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -84,36 +84,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="15sp"
-                android:layout_margin="5dp"/>
+                android:textSize="@dimen/common_text_size"
+                android:layout_marginEnd="@dimen/text_view_margin"/>
 
             <ImageButton
                 android:id="@+id/commentButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_width="@dimen/media_buttons_size"
+                android:layout_height="@dimen/media_buttons_size"
+                android:src="@drawable/ic_comments"
+                android:background="@color/colorWhite"
                 tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/commentText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:layout_margin="5dp"/>
+                android:layout_gravity="center"
+                android:textSize="@dimen/common_text_size"
+                android:layout_marginEnd="@dimen/text_view_margin"/>
 
             <ImageButton
                 android:id="@+id/shareButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_width="@dimen/media_buttons_size"
+                android:layout_height="@dimen/media_buttons_size"
+                android:src="@drawable/ic_share"
+                android:background="@color/colorWhite"
                 tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/shareText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:layout_margin="5dp"/>
+                android:layout_gravity="center"
+                android:textSize="@dimen/common_text_size"/>
         </LinearLayout>
 
     </RelativeLayout>

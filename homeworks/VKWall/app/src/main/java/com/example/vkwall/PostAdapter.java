@@ -3,6 +3,7 @@ package com.example.vkwall;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -33,9 +34,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         ImageView avatar;
         ImageView postImage;
         ImageButton likeButton;
+        CardView cardView;
         
         PostViewHolder(View itemView) {
             super(itemView);
+            cardView = itemView.findViewById(R.id.cardView);
             avatar = itemView.findViewById(R.id.avatar);
             username = itemView.findViewById(R.id.username);
             postDate = itemView.findViewById(R.id.postDate);
@@ -45,12 +48,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             commentText = itemView.findViewById(R.id.commentText);
             shareText = itemView.findViewById(R.id.shareText);
             likeButton = itemView.findViewById(R.id.likeButton);
-
-            itemView.setOnClickListener(view -> {
-                Context context = view.getContext();
-                Intent intent = new Intent(view.getContext(), DetailedPostActivity.class);
-                context.startActivity(intent);
-            });
         }
     }
 
@@ -80,6 +77,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             button.setImageResource(currentItem.getLikeImage());
             postViewHolder.likeText.setText(currentItem.getLikeText());
 
+        });
+
+        postViewHolder.cardView.setOnClickListener(view -> {
+            Context context = view.getContext();
+            Intent intent = new Intent(view.getContext(), DetailedPostActivity.class);
+            intent.putExtra("post", currentItem);
+            context.startActivity(intent);
         });
     }
 

@@ -1,5 +1,7 @@
 package com.example.vkwall;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
@@ -10,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -42,6 +45,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             commentText = itemView.findViewById(R.id.commentText);
             shareText = itemView.findViewById(R.id.shareText);
             likeButton = itemView.findViewById(R.id.likeButton);
+
+            itemView.setOnClickListener(view -> {
+                Context context = view.getContext();
+                Intent intent = new Intent(view.getContext(), DetailedPostActivity.class);
+                context.startActivity(intent);
+            });
         }
     }
 
@@ -65,17 +74,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         postViewHolder.commentText.setText(currentItem.getCommentText());
         postViewHolder.shareText.setText(currentItem.getShareText());
         postViewHolder.likeButton.setImageResource(currentItem.getLikeImage());
+        postViewHolder.likeButton.setOnClickListener(view -> {
+            ImageButton button = (ImageButton)view;
+            currentItem.changeLike();
+            button.setImageResource(currentItem.getLikeImage());
+            postViewHolder.likeText.setText(currentItem.getLikeText());
 
-        View.OnClickListener likeClickListener = new View.OnClickListener() {
-            public void onClick(View view) {
-                ImageButton button = (ImageButton)view;
-                currentItem.changeLike();
-                button.setImageResource(currentItem.getLikeImage());
-                postViewHolder.likeText.setText(currentItem.getLikeText());
-
-            }
-        };
-        postViewHolder.likeButton.setOnClickListener(likeClickListener);
+        });
     }
 
     @Override

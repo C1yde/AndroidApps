@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/relative_layout_margin"
+    tools:context=".DetailedPostActivity">
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/avatar_size"
+        android:layout_height="@dimen/avatar_size"
+        android:padding="@dimen/avatar_padding"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/avatar"
+        android:layout_marginStart="@dimen/title_text_margin"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/common_text_size"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/postDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:layout_toEndOf="@+id/avatar"
+        android:layout_marginStart="@dimen/title_text_margin"
+        android:textSize="@dimen/common_text_size" />
+
+    <TextView
+        android:id="@+id/postText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/avatar"
+        android:textSize="@dimen/common_text_size"
+        android:layout_margin="@dimen/text_view_margin"/>
+
+    <ImageView
+        android:id="@+id/postImage"
+        android:layout_below="@+id/postText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/postImage"
+        android:background="?android:attr/listDivider"
+        android:layout_marginTop="@dimen/divide_top_margin"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/divider" >
+
+        <ImageButton
+            android:id="@+id/likeButton"
+            android:layout_width="@dimen/media_buttons_size"
+            android:layout_height="@dimen/media_buttons_size"
+            android:src="@drawable/ic_like_standard"
+            android:background="@color/colorWhite"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/likeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/common_text_size"
+            android:layout_marginEnd="@dimen/media_text_view_margin"/>
+
+        <ImageButton
+            android:id="@+id/commentButton"
+            android:layout_width="@dimen/media_buttons_size"
+            android:layout_height="@dimen/media_buttons_size"
+            android:src="@drawable/ic_comments"
+            android:background="@color/colorWhite"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/commentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/common_text_size"
+            android:layout_marginEnd="@dimen/media_text_view_margin"/>
+
+        <ImageButton
+            android:id="@+id/shareButton"
+            android:layout_width="@dimen/media_buttons_size"
+            android:layout_height="@dimen/media_buttons_size"
+            android:src="@drawable/ic_share"
+            android:background="@color/colorWhite"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/shareText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/common_text_size"/>
+    </LinearLayout>
+
+</RelativeLayout>

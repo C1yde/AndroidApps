@@ -57,7 +57,7 @@ dependencies {
 }
 
 private String readWeatherApiKey() {
-    def keysPropertiesFile = rootProject.file("local.properties")
+    def keysPropertiesFile = rootProject.file("keys.properties")
     def keysProperties = new Properties()
     try {
         keysProperties.load(new FileInputStream(keysPropertiesFile))

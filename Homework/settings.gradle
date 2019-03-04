@@ -1,1 +1,1 @@
-include ':calculator', ':pokemongoalpha', ':vkwall'
+include ':calculator', ':pokemongoalpha', ':vkwall', ':weather'

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">weather</string>
+    <string name="load_with_async_task">Load with Async Task</string>
+    <string name="load_with_retrofit_callback">Load with Retrofit Callback</string>
+</resources>

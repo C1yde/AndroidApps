@@ -6,13 +6,8 @@ import java.util.ArrayList;
 
 public class FiveDayForecastResponse {
 
-    @SerializedName("city")
-    private City city;
-
     @SerializedName("list")
     private ArrayList<WeatherInfo> weatherByTimeInfo;
 
-    public City getCity() {
-        return city;
-    }
+    public ArrayList<WeatherInfo> getWeatherByTimeInfo() { return weatherByTimeInfo; }
 }

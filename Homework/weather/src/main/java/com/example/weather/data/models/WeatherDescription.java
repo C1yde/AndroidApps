@@ -5,5 +5,9 @@ import com.google.gson.annotations.SerializedName;
 public class WeatherDescription {
 
     @SerializedName("icon")
-    private String icon;
+    private String iconName;
+
+    public String getIconUrl(){
+        return "http://openweathermap.org/img/w/" + iconName + ".png";
+    }
 }

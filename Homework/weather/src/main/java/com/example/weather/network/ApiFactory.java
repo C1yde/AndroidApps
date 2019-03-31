@@ -1,9 +1,8 @@
 package com.example.weather.network;
 
-import android.support.annotation.NonNull;
-
 import com.example.weather.BuildConfig;
 
+import androidx.annotation.NonNull;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

@@ -1,10 +1,9 @@
 package com.example.weather.network;
 
-import android.support.annotation.NonNull;
-
 import com.example.weather.BuildConfig;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
+import androidx.annotation.NonNull;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 

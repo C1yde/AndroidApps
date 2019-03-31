@@ -51,6 +51,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
     }
 
+    public void setWeatherInfo(ArrayList<Post> posts){
+        mPosts.clear();
+        mPosts.addAll(posts);
+    }
+
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

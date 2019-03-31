@@ -5,13 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.weather.data.models.FiveDayForecastResponse;
 import com.example.weather.data.repository.RepositoryProvider;
@@ -19,9 +14,13 @@ import com.example.weather.recyclerView.WeatherInfoAdapter;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -30,11 +29,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.tvDayForecast)
-    TextView dayInfoView;
-
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+
+    WeatherInfoAdapter adapter;
 
     public static void start(@NonNull Context context) {
         context.startActivity(new Intent(context, MainActivity.class));
@@ -50,15 +48,15 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.default_city);
         setSupportActionBar(toolbar);
 
-        reloadForecast();
-
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        WeatherInfoAdapter adapter = new WeatherInfoAdapter(posts);
+        adapter = new WeatherInfoAdapter();
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        reloadForecast();
     }
 
     void reloadForecast() {
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(@Nullable FiveDayForecastResponse fullWeatherInfo) {
             if (fullWeatherInfo != null) {
-                dayInfoView.setText(fullWeatherInfo.getCity().toString());
+                adapter.setWeatherInfo(fullWeatherInfo.getWeatherByTimeInfo());
             }
             hideProgressBar();
         }

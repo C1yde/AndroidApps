@@ -2,34 +2,16 @@ package com.example.weather.data.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class WeatherInfo {
 
-    @SerializedName("id")
-    private long id;
+    @SerializedName("dt")
+    private float dateTime;
 
     @SerializedName("main")
-    private String weatherMainInfo;
+    private TimeTempInfo timeTempInfo;
 
-    @SerializedName("description")
-    private String weatherDescription;
-
-    @SerializedName("icon")
-    private String iconUrl;
-
-
-    public long getId() {
-        return id;
-    }
-
-    public String getWeatherMainInfo() {
-        return weatherMainInfo;
-    }
-
-    public String getWeatherDescription() {
-        return weatherDescription;
-    }
-
-    public String getIconUrl() {
-        return iconUrl;
-    }
+    @SerializedName("weather")
+    private ArrayList<WeatherDescription> weatherList;
 }

@@ -1,29 +1,34 @@
 package com.example.weather;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import com.example.weather.data.models.DayForecastResponse;
+import com.example.weather.data.models.FiveDayForecastResponse;
 import com.example.weather.data.repository.RepositoryProvider;
+import com.example.weather.recyclerView.WeatherInfoAdapter;
 
 import java.io.IOException;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.tvDayForecast)
     TextView dayInfoView;
@@ -41,34 +46,25 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        toolbar.setTitle(R.string.default_city);
+        setSupportActionBar(toolbar);
+
+        reloadForecast();
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        WeatherInfoAdapter adapter = new WeatherInfoAdapter(posts);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
-    @OnClick(R.id.btnLoadWithAsyncTask)
-    void loadDayForecastWithAsyncTask() {
+    void reloadForecast() {
+        ActionBar bar = getSupportActionBar();
         GetTemperatureRequest getTemperatureRequest = new GetTemperatureRequest();
-        getTemperatureRequest.execute("Kazan");
-    }
-
-    @OnClick(R.id.btnLoadWithRetrofitCallback)
-    void loadWeatherWithRetrofitCallback() {
-        RepositoryProvider.get()
-                .provideNewsFeedRepository()
-                .getDayForecast("Kazan")
-                .enqueue(new Callback<DayForecastResponse>() {
-                    @Override
-                    public void onResponse(@NonNull Call<DayForecastResponse> call,
-                                           @NonNull Response<DayForecastResponse> response) {
-                        if (response.isSuccessful()) {
-                            dayInfoView.setText(response.body().getDayForecastInfo().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<DayForecastResponse> call,
-                                          @NonNull Throwable t) {
-                        // Handle errors
-                    }
-                });
+        getTemperatureRequest.execute(bar.getTitle().toString());
     }
 
     private void showProgressBar() {
@@ -79,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
     }
 
-    private class GetTemperatureRequest extends AsyncTask<String, Void, DayForecastResponse> {
+    @SuppressLint("StaticFieldLeak")
+    private class GetTemperatureRequest extends AsyncTask<String, Void, FiveDayForecastResponse> {
 
         @Override
         protected void onPreExecute() {
@@ -87,11 +84,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected DayForecastResponse doInBackground(String... city) {
+        protected FiveDayForecastResponse doInBackground(String... city) {
             try {
                 return RepositoryProvider.get()
                         .provideNewsFeedRepository()
-                        .getDayForecast(city[0])
+                        .getFiveDayForecast(city[0])
                         .execute()
                         .body();
             } catch (IOException e) {
@@ -100,9 +97,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(@Nullable DayForecastResponse fullWeatherInfo) {
+        protected void onPostExecute(@Nullable FiveDayForecastResponse fullWeatherInfo) {
             if (fullWeatherInfo != null) {
-                dayInfoView.setText(fullWeatherInfo.getDayForecastInfo().toString());
+                dayInfoView.setText(fullWeatherInfo.getCity().toString());
             }
             hideProgressBar();
         }

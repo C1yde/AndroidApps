@@ -1,1 +1,1 @@
-include ':calculator', ':pokemongoalpha', ':vkwall', ':weather', ':rxtasks'
+include ':calculator', ':pokemongoalpha', ':vkwall', ':weather', ':rxtasks', ':chuckorcats'

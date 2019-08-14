@@ -13,10 +13,10 @@ import com.example.chuckorcats.models.Fact;
 
 import java.util.ArrayList;
 
-public class FactAdapter extends RecyclerView.Adapter<FactAdapter.FactViewHolder> {
+public class FactsAdapter extends RecyclerView.Adapter<FactsAdapter.FactsViewHolder> {
     private ArrayList<Fact> mFacts;
 
-    public FactAdapter(){
+    public FactsAdapter(){
         mFacts = new ArrayList<>();
     }
 
@@ -28,16 +28,16 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.FactViewHolder
 
     @NonNull
     @Override
-    public FactViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public FactsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fact_view, viewGroup, false);
-        return new FactViewHolder(view);
+        return new FactsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FactViewHolder factViewHolder, int i) {
+    public void onBindViewHolder(@NonNull FactsViewHolder factsViewHolder, int i) {
         final Fact currentItem = mFacts.get(i);
 
-        factViewHolder.textView.setText(currentItem.value);
+        factsViewHolder.textView.setText(currentItem.text);
     }
 
     @Override
@@ -45,10 +45,10 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.FactViewHolder
         return mFacts.size();
     }
 
-    static class FactViewHolder extends RecyclerView.ViewHolder {
+    static class FactsViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
 
-        FactViewHolder(View itemView) {
+        FactsViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.factTextView);
         }

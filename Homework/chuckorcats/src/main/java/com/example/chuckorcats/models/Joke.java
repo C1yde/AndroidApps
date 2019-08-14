@@ -2,8 +2,9 @@ package com.example.chuckorcats.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Fact {
+public class Joke {
 
-    @SerializedName("text")
-    public String text;
+    @SerializedName("value")
+    public String value;
+
 }

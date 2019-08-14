@@ -10,22 +10,27 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.chuckorcats.R;
 
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class PagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.chuck, R.string.cats};
     private final Context mContext;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public PagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        switch (position) {
+            case 0:
+                return ChuckFragment.newInstance(0, mContext.getString(TAB_TITLES[position]));
+            case 1:
+                return CatsFragment.newInstance(1, mContext.getString(TAB_TITLES[position]));
+            default:
+                return null;
+        }
     }
 
     @Nullable

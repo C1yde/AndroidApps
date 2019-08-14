@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,6 +53,10 @@ public class CatsFragment extends Fragment {
         RecyclerView factsRecyclerView = root.findViewById(R.id.cats_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
         factsAdapter = new FactsAdapter();
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(factsRecyclerView.getContext(),
+                layoutManager.getOrientation());
+        factsRecyclerView.addItemDecoration(dividerItemDecoration);
 
         factsRecyclerView.setHasFixedSize(true);
         factsRecyclerView.setLayoutManager(layoutManager);

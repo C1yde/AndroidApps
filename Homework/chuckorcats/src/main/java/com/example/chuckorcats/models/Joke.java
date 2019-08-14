@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Joke {
 
-    @SerializedName("value")
-    public String value;
+    @SerializedName("joke")
+    public String joke;
 
 }

@@ -3,4 +3,6 @@
     <string name="chuck_or_cats">Chuck or Cats</string>
     <string name="chuck">Chuck</string>
     <string name="cats">Cats</string>
+    <string name="factText">FactText</string>
+    <string name="jokeText">JokeText</string>
 </resources>

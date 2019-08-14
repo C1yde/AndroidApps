@@ -38,7 +38,7 @@ public class JokesAdapter extends RecyclerView.Adapter<JokesAdapter.JokesViewHol
     public void onBindViewHolder(@NonNull JokesViewHolder jokesViewHolder, int i) {
         final Joke currentItem = mJokes.get(i);
 
-        jokesViewHolder.textView.setText(currentItem.value);
+        jokesViewHolder.textView.setText(currentItem.joke);
     }
 
     @Override

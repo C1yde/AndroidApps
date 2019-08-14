@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,6 +52,10 @@ public class ChuckFragment extends Fragment {
         RecyclerView jokesRecyclerView = root.findViewById(R.id.chuck_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
         jokesAdapter = new JokesAdapter();
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(jokesRecyclerView.getContext(),
+                layoutManager.getOrientation());
+        jokesRecyclerView.addItemDecoration(dividerItemDecoration);
 
         jokesRecyclerView.setHasFixedSize(true);
         jokesRecyclerView.setLayoutManager(layoutManager);

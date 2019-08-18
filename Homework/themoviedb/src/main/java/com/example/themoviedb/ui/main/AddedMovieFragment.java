@@ -1,13 +1,9 @@
 package com.example.themoviedb.ui.main;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,15 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.R;
-import com.example.themoviedb.models.MovieResponse;
 import com.example.themoviedb.recyclerView.AddedMovieAdapter;
-import com.example.themoviedb.recyclerView.SearchMovieAdapter;
-import com.example.themoviedb.repository.RepositoryProvider;
-
-import java.util.Objects;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class AddedMovieFragment extends Fragment {
 
@@ -66,36 +54,6 @@ public class AddedMovieFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        EditText searchTextView = Objects.requireNonNull(getActivity()).findViewById(R.id.searchText);
-        searchTextView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {}
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                if(s.length() != 0){
-                    reloadMovies(s.toString());
-                }
-            }
-        });
-
         return root;
-    }
-
-    @SuppressLint("CheckResult")
-    private void reloadMovies(@NonNull String searchText) {
-        RepositoryProvider.get()
-            .provideRepository()
-            .getMovies(searchText)
-            .map(MovieResponse::getMovies)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(adapter::setMovies, throwable -> new Exception(throwable.getMessage()));
     }
 }

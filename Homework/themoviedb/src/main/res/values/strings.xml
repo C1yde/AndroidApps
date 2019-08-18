@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">The movie DB</string>
-    <string name="tab_text_1">Watch list</string>
+    <string name="tab_text_1">Watchlist</string>
     <string name="tab_text_2">Watched</string>
+    <string name="empty_watchlist_text">Please use search to add movies to your Watchlist</string>
+    <string name="searchHint">Search</string>
 </resources>

@@ -4,10 +4,10 @@ import androidx.annotation.NonNull;
 
 import com.example.themoviedb.models.MovieResponse;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 
 public interface MovieRepository {
 
-    Call<MovieResponse> getMovies(@NonNull String searchString);
+    Observable<MovieResponse> getMovies(@NonNull String searchString);
 
 }

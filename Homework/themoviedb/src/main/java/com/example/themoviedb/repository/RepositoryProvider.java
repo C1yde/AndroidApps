@@ -33,7 +33,7 @@ public class RepositoryProvider {
     }
 
     @NonNull
-    public MovieRepository provideCatsRepository() {
+    public MovieRepository provideRepository() {
         if (repository == null) {
             repository = new MovieRepositoryImpl(getServiceInstance(MovieDBClient.class));
         }

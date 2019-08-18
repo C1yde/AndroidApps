@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import com.example.themoviedb.models.MovieResponse;
 import com.example.themoviedb.network.clients.MovieDBClient;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 
 public class MovieRepositoryImpl implements MovieRepository {
 
@@ -17,7 +17,7 @@ public class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public Call<MovieResponse> getMovies(@NonNull String searchString) {
+    public Observable<MovieResponse> getMovies(@NonNull String searchString) {
         return client.getMovies(searchString);
     }
 }

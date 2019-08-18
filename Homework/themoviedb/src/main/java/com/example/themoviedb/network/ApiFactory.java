@@ -6,6 +6,7 @@ import com.example.themoviedb.BuildConfig;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class ApiFactory {
@@ -21,10 +22,11 @@ public final class ApiFactory {
     public static Retrofit getRetrofitInstance() {
         if (sRetrofit == null) {
             sRetrofit = new Retrofit.Builder()
-                    .baseUrl(BuildConfig.THE_MOVIE_DB_URL)
-                    .client(provideClient())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+                .baseUrl(BuildConfig.THE_MOVIE_DB_URL)
+                .client(provideClient())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
         }
         return sRetrofit;
     }

@@ -1,13 +1,12 @@
 package com.example.vkwall;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.time.Instant;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class DetailedPostActivity extends AppCompatActivity {
     TextView username;

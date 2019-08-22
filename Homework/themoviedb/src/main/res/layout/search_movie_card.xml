@@ -21,16 +21,24 @@
         <TextView
             android:id="@+id/movieTitle"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
+            android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/moviePoster"
-            android:gravity="center"
-            android:text="Title"
-            android:textAlignment="gravity"
-            android:textAllCaps="false"
+            android:layout_toStartOf="@id/addRemoveButton"
+            android:layout_centerVertical="true"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/addRemoveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/add_remove_movie_button"
+            android:background="@color/colorWhite"
+            android:src="@drawable/plus" />
 
     </RelativeLayout>
 

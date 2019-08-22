@@ -4,4 +4,5 @@
     <string name="tab_text_2">Watched</string>
     <string name="empty_watchlist_text">Please use search to add movies to your Watchlist</string>
     <string name="searchHint">Search</string>
+    <string name="add_remove_movie_button">Add/remove movie button</string>
 </resources>

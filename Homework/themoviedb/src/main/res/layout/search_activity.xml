@@ -18,17 +18,10 @@
             android:id="@+id/appBar"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-            <EditText
+            <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/searchHint"
-                android:inputType="textFilter"
-                android:padding="@dimen/editTextPadding"
-                android:saveEnabled="false"
-                android:textAlignment="viewStart"
-                android:textIsSelectable="true"
-                tools:ignore="Autofill,LabelFor" />
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -38,16 +31,5 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginStart="@dimen/fab_margin"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="@dimen/fab_margin"
-        app:srcCompat="@drawable/baseline_search_black_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

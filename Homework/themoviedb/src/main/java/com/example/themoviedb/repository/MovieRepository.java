@@ -4,10 +4,10 @@ import androidx.annotation.NonNull;
 
 import com.example.themoviedb.models.MovieResponse;
 
-import io.reactivex.Single;
+import io.reactivex.Observable;
 
 public interface MovieRepository {
 
-    Single<MovieResponse> getMovies(@NonNull String searchString);
+    Observable<MovieResponse> getMovies(@NonNull String searchString);
 
 }

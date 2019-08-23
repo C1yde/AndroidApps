@@ -5,4 +5,7 @@
     <string name="empty_watchlist_text">Please use search to add movies to your Watchlist</string>
     <string name="searchHint">Search</string>
     <string name="add_remove_movie_button">Add/remove movie button</string>
+    <string name="undoString">UNDO</string>
+    <string name="movieAdded">Movie added to Watchlist</string>
+    <string name="movieRemoved">Movie removed from Watchlist</string>
 </resources>

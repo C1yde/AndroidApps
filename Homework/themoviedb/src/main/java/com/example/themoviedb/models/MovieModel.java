@@ -19,7 +19,9 @@ public class MovieModel {
     public double rating;
 
     @SerializedName("overview")
-    private String overview;
+    public String overview;
+
+    public Boolean isAdded = false;
 
     public void setPoster(ImageView imageView){ Picasso.get().load(this.imageLink + posterPath).into(imageView); }
 }

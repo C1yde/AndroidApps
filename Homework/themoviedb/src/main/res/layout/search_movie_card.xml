@@ -36,6 +36,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
+            android:foreground="?android:attr/selectableItemBackground"
             android:contentDescription="@string/add_remove_movie_button"
             android:background="@color/colorWhite"
             android:src="@drawable/plus" />

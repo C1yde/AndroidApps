@@ -1,15 +1,14 @@
 package com.example.themoviedb;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.themoviedb.ui.main.WatchlistMovieFragment;
 import com.example.themoviedb.ui.main.PagerAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.themoviedb.ui.main.WatchedMovieFragment;
+import com.example.themoviedb.ui.main.WatchlistMovieFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import butterknife.BindView;
@@ -23,9 +22,6 @@ public class TabActivity extends AppCompatActivity {
     @BindView(R.id.tabs)
     TabLayout tabs;
 
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +33,24 @@ public class TabActivity extends AppCompatActivity {
 
         tabs.setupWithViewPager(viewPager);
 
-        fab.setOnClickListener(view -> {
-            Context context = view.getContext();
-            Intent intent = new Intent(view.getContext(), SearchActivity.class);
-            context.startActivity(intent);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Fragment fragment = getSupportFragmentManager().getFragments().get(position);
+                if(fragment != null && fragment.isAdded() && viewPager.getCurrentItem() == 1){
+                    ((WatchedMovieFragment)fragment).reloadWatchedMovies();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
         });
     }
 

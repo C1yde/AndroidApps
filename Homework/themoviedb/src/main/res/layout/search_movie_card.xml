@@ -15,7 +15,7 @@
             android:id="@+id/moviePoster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="@dimen/moviePosterPadding"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_toStartOf="@id/addRemoveButton"
             android:layout_centerVertical="true"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/movieTitleSize"
             android:textStyle="bold" />
 
         <ImageButton
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/movie_card_image_margin_end"
             android:foreground="?android:attr/selectableItemBackground"
             android:contentDescription="@string/add_remove_movie_button"
             android:background="@color/colorWhite"

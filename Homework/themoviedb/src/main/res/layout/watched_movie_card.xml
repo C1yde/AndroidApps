@@ -23,11 +23,23 @@
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_toEndOf="@+id/moviePoster"
+            android:layout_toStartOf="@id/likeDislikeButton"
             android:gravity="center"
             android:textAlignment="gravity"
             android:textColor="@android:color/black"
             android:textSize="@dimen/movieTitleSize"
             android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/likeDislikeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/movie_card_image_margin_end"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@color/colorWhite"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/like_dislike_image"/>
 
     </RelativeLayout>
 

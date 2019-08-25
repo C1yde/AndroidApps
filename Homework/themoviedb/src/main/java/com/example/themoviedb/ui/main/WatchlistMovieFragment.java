@@ -1,5 +1,7 @@
 package com.example.themoviedb.ui.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.R;
+import com.example.themoviedb.SearchActivity;
 import com.example.themoviedb.database.MoviesDatabaseHelper;
 import com.example.themoviedb.recyclerView.WatchlistMovieAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class WatchlistMovieFragment extends Fragment {
 
@@ -54,6 +58,13 @@ public class WatchlistMovieFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+            Context context = view.getContext();
+            Intent intent = new Intent(view.getContext(), SearchActivity.class);
+            context.startActivity(intent);
+        });
 
         reloadWatchlist();
 

@@ -79,7 +79,7 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
             movie.title = cursor.getString(cursor.getColumnIndex(KEY_MOVIE_TITLE));
             movie.posterPath = cursor.getString(cursor.getColumnIndex(KEY_MOVIE_POSTER_PATH));
             movie.rating = cursor.getInt(cursor.getColumnIndex(KEY_MOVIE_RATING)) != 0;
-            movie.rating = cursor.getInt(cursor.getColumnIndex(KEY_MOVIE_IS_WATCHED)) != 0;
+            movie.isWatched = cursor.getInt(cursor.getColumnIndex(KEY_MOVIE_IS_WATCHED)) != 0;
 
             cursor.close();
             return movie;
@@ -89,19 +89,19 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public ArrayList<Movie> getAllMovies(boolean isWatched){
+    public ArrayList<Movie> getAllMovies(boolean onlyWatched){
         SQLiteDatabase db = this.getReadableDatabase();
 
         ArrayList<Movie> list = new ArrayList<>();
 
         String selection = KEY_MOVIE_IS_WATCHED + " = ?";
-        String[] selectionArgs = { isWatched ? "1" : "0" };
+        String[] selectionArgs = { "1" };
 
         try (Cursor cursor = db.query(
                 TABLE_MOVIES,
                 null,
-                selection,
-                selectionArgs,
+                onlyWatched ? selection : null,
+                onlyWatched ? selectionArgs : null,
                 null,
                 null,
                 null
@@ -114,7 +114,7 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
                     movie.title = cursor.getString(cursor.getColumnIndex(KEY_MOVIE_TITLE));
                     movie.posterPath = cursor.getString(cursor.getColumnIndex(KEY_MOVIE_POSTER_PATH));
                     movie.rating = cursor.getInt(cursor.getColumnIndex(KEY_MOVIE_RATING)) != 0;
-                    movie.rating = cursor.getInt(cursor.getColumnIndex(KEY_MOVIE_IS_WATCHED)) != 0;
+                    movie.isWatched = cursor.getInt(cursor.getColumnIndex(KEY_MOVIE_IS_WATCHED)) != 0;
 
                     list.add(movie);
                 } while (cursor.moveToNext());

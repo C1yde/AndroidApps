@@ -1,6 +1,7 @@
 package com.example.themoviedb.recyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.R;
+import com.example.themoviedb.database.MoviesDatabaseHelper;
 import com.example.themoviedb.models.Movie;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -44,21 +48,50 @@ public class WatchlistMovieAdapter extends RecyclerView.Adapter<WatchlistMovieAd
         currentItem.setPoster(viewHolder.moviePoster);
         viewHolder.titleTextView.setText(currentItem.title);
 
-        viewHolder.menuButton.setOnClickListener(this::showPopupMenu);
+        viewHolder.menuButton.setOnClickListener(v -> showPopupMenu(v, currentItem, i));
     }
 
-    private void showPopupMenu(View view){
+    private void showPopupMenu(View view, Movie movie, int index){
         final PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+
+        MoviesDatabaseHelper databaseHelper = MoviesDatabaseHelper.getInstance(view.getContext());
         popupMenu.inflate(R.menu.watchlist_movie_menu);
         popupMenu.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
-                case 0:
-                    // item ID 0 was clicked
+                case R.id.action_add_to_watched:
+                    if (movie.isWatched){
+                        Snackbar snackbar = Snackbar.make(view, "Movie already added to Watched list.", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                        return true;
+                    }
+
+                    movie.isWatched = true;
+                    databaseHelper.updateMovie(movie);
+                    mMovies.set(index, movie);
                     return true;
-                case 1:
-                    // item ID 1 was clicked
+
+                case R.id.action_rate_movie:
+                    DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                movie.rating = true;
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                movie.rating = false;
+                                break;
+                        }
+
+                        databaseHelper.updateMovie(movie);
+                        mMovies.set(index, movie);
+                    };
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setMessage("Did you like this movie?").setPositiveButton("Yes", dialogClickListener)
+                            .setNegativeButton("No", dialogClickListener).show();
                     return true;
             }
+
             return false;
         });
 

@@ -11,4 +11,5 @@
     <string name="menu_button">Menu button</string>
     <string name="add_to_watched">Add to Watched</string>
     <string name="rate_movie">Rate movie</string>
+    <string name="like_dislike_image">Like/dislike image</string>
 </resources>

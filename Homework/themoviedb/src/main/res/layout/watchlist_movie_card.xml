@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_toEndOf="@+id/moviePoster"
+            android:layout_toStartOf="@id/menuButton"
             android:gravity="center"
             android:textAlignment="gravity"
             android:textColor="@android:color/black"

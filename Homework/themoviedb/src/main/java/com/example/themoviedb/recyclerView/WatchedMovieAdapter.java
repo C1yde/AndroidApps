@@ -14,10 +14,10 @@ import com.example.themoviedb.models.Movie;
 
 import java.util.ArrayList;
 
-public class AddedMovieAdapter extends RecyclerView.Adapter<AddedMovieAdapter.AddedMovieViewHolder> {
+public class WatchedMovieAdapter extends RecyclerView.Adapter<WatchedMovieAdapter.WatchedMovieViewHolder> {
     private ArrayList<Movie> mMovies;
 
-    public AddedMovieAdapter(){
+    public WatchedMovieAdapter(){
         mMovies = new ArrayList<>();
     }
 
@@ -29,13 +29,13 @@ public class AddedMovieAdapter extends RecyclerView.Adapter<AddedMovieAdapter.Ad
 
     @NonNull
     @Override
-    public AddedMovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.added_movie_card, viewGroup, false);
-        return new AddedMovieViewHolder(view);
+    public WatchedMovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.watched_movie_card, viewGroup, false);
+        return new WatchedMovieViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AddedMovieViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull WatchedMovieViewHolder viewHolder, int i) {
         final Movie currentItem = mMovies.get(i);
 
         currentItem.setPoster(viewHolder.moviePoster);
@@ -47,25 +47,14 @@ public class AddedMovieAdapter extends RecyclerView.Adapter<AddedMovieAdapter.Ad
         return mMovies.size();
     }
 
-    static class AddedMovieViewHolder extends RecyclerView.ViewHolder {
+    static class WatchedMovieViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
         ImageView moviePoster;
 
-        AddedMovieViewHolder(View itemView) {
+        WatchedMovieViewHolder(View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.movieTitle);
             moviePoster = itemView.findViewById(R.id.moviePoster);
         }
-    }
-
-    public void addItem(Movie movie){
-        mMovies.add(movie);
-        this.notifyItemChanged(this.getItemCount());
-    }
-
-    public void removeItem(Movie movie){
-        int index = mMovies.indexOf(movie);
-        mMovies.remove(index);
-        this.notifyItemRemoved(index);
     }
 }

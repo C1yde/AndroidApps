@@ -8,4 +8,7 @@
     <string name="undoString">UNDO</string>
     <string name="movieAdded">Movie added to Watchlist</string>
     <string name="movieRemoved">Movie removed from Watchlist</string>
+    <string name="menu_button">Menu button</string>
+    <string name="add_to_watched">Add to Watched</string>
+    <string name="rate_movie">Rate movie</string>
 </resources>

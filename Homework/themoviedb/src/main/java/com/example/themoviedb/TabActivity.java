@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.themoviedb.ui.main.WatchlistMovieFragment;
 import com.example.themoviedb.ui.main.PagerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -41,5 +42,15 @@ public class TabActivity extends AppCompatActivity {
             Intent intent = new Intent(view.getContext(), SearchActivity.class);
             context.startActivity(intent);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        WatchlistMovieFragment fragment = (WatchlistMovieFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager + ":" + viewPager.getCurrentItem());
+        if(fragment != null && fragment.isAdded()){
+            fragment.reloadWatchlist();
+        }
     }
 }

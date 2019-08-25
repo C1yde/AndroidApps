@@ -13,16 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.R;
 import com.example.themoviedb.database.MoviesDatabaseHelper;
-import com.example.themoviedb.recyclerView.AddedMovieAdapter;
+import com.example.themoviedb.recyclerView.WatchedMovieAdapter;
 
-public class AddedMovieFragment extends Fragment {
+public class WatchedMovieFragment extends Fragment {
 
     private static String title;
     private static int page;
-    private static AddedMovieAdapter adapter;
+    private WatchedMovieAdapter adapter;
 
-    public static AddedMovieFragment newInstance(int page, String title) {
-        AddedMovieFragment fragment = new AddedMovieFragment();
+    public static WatchedMovieFragment newInstance(int page, String title) {
+        WatchedMovieFragment fragment = new WatchedMovieFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("someInt", page);
         bundle.putString("someTitle", title);
@@ -41,11 +41,11 @@ public class AddedMovieFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.added_movie_fragment, container, false);
+        View root = inflater.inflate(R.layout.watched_movie_fragment, container, false);
 
-        RecyclerView recyclerView = root.findViewById(R.id.added_movie_recyclerView);
+        RecyclerView recyclerView = root.findViewById(R.id.watched_movie_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
-        adapter = new AddedMovieAdapter();
+        adapter = new WatchedMovieAdapter();
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 layoutManager.getOrientation());
@@ -55,13 +55,13 @@ public class AddedMovieFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        reloadAddedMovies();
+        reloadWatchedMovies();
 
         return root;
     }
 
-    private void reloadAddedMovies() {
+    public void reloadWatchedMovies() {
         MoviesDatabaseHelper databaseHelper = MoviesDatabaseHelper.getInstance(this.getActivity());
-        adapter.setMovies(databaseHelper.getAllMovies());
+        adapter.setMovies(databaseHelper.getAllMovies(true));
     }
 }

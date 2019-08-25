@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/addedMovieCardView"
+    android:id="@+id/watchlistMovieCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardUseCompatPadding="true">
@@ -28,6 +28,15 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/movieTitleSize"
             android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/menuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/menu_button"
+            style="?android:attr/actionOverflowButtonStyle"/>
 
     </RelativeLayout>
 

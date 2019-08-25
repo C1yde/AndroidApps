@@ -89,13 +89,23 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public ArrayList<Movie> getAllMovies(){
+    public ArrayList<Movie> getAllMovies(boolean isWatched){
         SQLiteDatabase db = this.getReadableDatabase();
 
         ArrayList<Movie> list = new ArrayList<>();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_MOVIES;
-        try (Cursor cursor = db.rawQuery(selectQuery, null)) {
+        String selection = KEY_MOVIE_IS_WATCHED + " = ?";
+        String[] selectionArgs = { isWatched ? "1" : "0" };
+
+        try (Cursor cursor = db.query(
+                TABLE_MOVIES,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        )) {
 
             if (cursor.moveToFirst()) {
                 do {

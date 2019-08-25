@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder> {
     private ArrayList<Movie> mMovies;
-    private static AddedMovieAdapter adapter;
 
     public SearchMovieAdapter(){
         mMovies = new ArrayList<>();
@@ -61,12 +60,10 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
             if (persistMovie != null){
                 castedView.setImageResource(R.drawable.plus);
                 databaseHelper.deleteMovie(persistMovie);
-                adapter.removeItem(persistMovie);
                 snackBarText = R.string.movieRemoved;
             } else{
                 castedView.setImageResource(R.drawable.check);
                 databaseHelper.addMovie(currentItem);
-                adapter.addItem(currentItem);
                 snackBarText = R.string.movieAdded;
             }
 

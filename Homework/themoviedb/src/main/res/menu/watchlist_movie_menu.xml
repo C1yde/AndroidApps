@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_add_to_watched"
+        android:orderInCategory="100"
+        android:title="@string/add_to_watched"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_rate_movie"
+        android:orderInCategory="100"
+        android:title="@string/rate_movie"
+        app:showAsAction="never" />
+</menu>

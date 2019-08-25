@@ -12,16 +12,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.R;
-import com.example.themoviedb.recyclerView.SearchMovieAdapter;
+import com.example.themoviedb.database.MoviesDatabaseHelper;
+import com.example.themoviedb.recyclerView.WatchlistMovieAdapter;
 
-public class SearchMovieFragment extends Fragment {
+public class WatchlistMovieFragment extends Fragment {
 
     private static String title;
     private static int page;
-    private SearchMovieAdapter adapter;
+    private static WatchlistMovieAdapter adapter;
 
-    public static SearchMovieFragment newInstance(int page, String title) {
-        SearchMovieFragment fragment = new SearchMovieFragment();
+    public static WatchlistMovieFragment newInstance(int page, String title) {
+        WatchlistMovieFragment fragment = new WatchlistMovieFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("someInt", page);
         bundle.putString("someTitle", title);
@@ -40,11 +41,11 @@ public class SearchMovieFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.search_movie_fragment, container, false);
+        View root = inflater.inflate(R.layout.watchlist_movie_fragment, container, false);
 
-        RecyclerView recyclerView = root.findViewById(R.id.search_movie_recyclerView);
+        RecyclerView recyclerView = root.findViewById(R.id.watchlist_movie_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
-        adapter = new SearchMovieAdapter();
+        adapter = new WatchlistMovieAdapter();
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 layoutManager.getOrientation());
@@ -54,6 +55,13 @@ public class SearchMovieFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+        reloadWatchlist();
+
         return root;
+    }
+
+    public void reloadWatchlist() {
+        MoviesDatabaseHelper databaseHelper = MoviesDatabaseHelper.getInstance(this.getActivity());
+        adapter.setMovies(databaseHelper.getAllMovies(false));
     }
 }

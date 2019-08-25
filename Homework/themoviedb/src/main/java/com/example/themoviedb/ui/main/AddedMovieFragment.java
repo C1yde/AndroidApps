@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.R;
+import com.example.themoviedb.database.MoviesDatabaseHelper;
 import com.example.themoviedb.recyclerView.AddedMovieAdapter;
 
 public class AddedMovieFragment extends Fragment {
 
     private static String title;
     private static int page;
-    private AddedMovieAdapter adapter;
+    private static AddedMovieAdapter adapter;
 
     public static AddedMovieFragment newInstance(int page, String title) {
         AddedMovieFragment fragment = new AddedMovieFragment();
@@ -54,6 +55,13 @@ public class AddedMovieFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+        reloadAddedMovies();
+
         return root;
+    }
+
+    private void reloadAddedMovies() {
+        MoviesDatabaseHelper databaseHelper = MoviesDatabaseHelper.getInstance(this.getActivity());
+        adapter.setMovies(databaseHelper.getAllMovies());
     }
 }

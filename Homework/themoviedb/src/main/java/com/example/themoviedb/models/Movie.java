@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.Picasso;
 
-public class MovieModel {
+public class Movie {
 
     private final String imageLink = "https://image.tmdb.org/t/p/w185/";
 
@@ -15,13 +15,11 @@ public class MovieModel {
     @SerializedName("original_title")
     public String title;
 
-    @SerializedName("vote_average")
-    public double rating;
+    public Integer id;
 
-    @SerializedName("overview")
-    public String overview;
+    public boolean rating = false;
 
-    public Boolean isAdded = false;
+    public boolean isWatched = false;
 
     public void setPoster(ImageView imageView){ Picasso.get().load(this.imageLink + posterPath).into(imageView); }
 }

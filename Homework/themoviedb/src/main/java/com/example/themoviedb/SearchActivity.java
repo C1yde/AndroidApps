@@ -53,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         getObservableQuery(searchTextView)
-                .debounce(3, TimeUnit.SECONDS)
+                .debounce(2, TimeUnit.SECONDS)
                 .filter(text -> !text.isEmpty() && text.length() >= 3)
                 .distinctUntilChanged()
                 .switchMap((Function<String, ObservableSource<MovieResponse>>) query -> RepositoryProvider.get()
@@ -63,7 +63,7 @@ public class SearchActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(MovieResponse::getMovies)
                 .subscribe(adapter::setMovies);
-    }
+}
 
     private Observable<String> getObservableQuery(SearchView searchTextView){
         PublishSubject<String> publishSubject = PublishSubject.create();

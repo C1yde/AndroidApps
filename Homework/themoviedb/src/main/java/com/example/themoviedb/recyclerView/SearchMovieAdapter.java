@@ -1,5 +1,6 @@
 package com.example.themoviedb.recyclerView;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +12,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.R;
-import com.example.themoviedb.models.MovieModel;
+import com.example.themoviedb.database.MoviesDatabaseHelper;
+import com.example.themoviedb.models.Movie;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder> {
-    private ArrayList<MovieModel> mMovies;
+    private ArrayList<Movie> mMovies;
+    private static AddedMovieAdapter adapter;
 
     public SearchMovieAdapter(){
         mMovies = new ArrayList<>();
     }
 
-    public void setMovies(ArrayList<MovieModel> movies){
+    public void setMovies(ArrayList<Movie> movies){
         mMovies.clear();
         mMovies.addAll(movies);
         notifyDataSetChanged();
@@ -38,22 +41,32 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull SearchMovieViewHolder viewHolder, int i) {
-        final MovieModel currentItem = mMovies.get(i);
+        final Movie currentItem = mMovies.get(i);
 
         currentItem.setPoster(viewHolder.moviePoster);
         viewHolder.titleTextView.setText(currentItem.title);
+
+        MoviesDatabaseHelper databaseHelper = MoviesDatabaseHelper.getInstance(viewHolder.context);
+
+        Movie addedMovie = databaseHelper.getMovie(currentItem.title);
+        viewHolder.addRemoveButton.setImageResource(addedMovie != null
+                ? R.drawable.check
+                : R.drawable.plus);
 
         viewHolder.addRemoveButton.setOnClickListener((view)->{
             final ImageButton castedView = (ImageButton)view;
 
             int snackBarText;
-            if (currentItem.isAdded){
+            Movie persistMovie = databaseHelper.getMovie(currentItem.title);
+            if (persistMovie != null){
                 castedView.setImageResource(R.drawable.plus);
-                currentItem.isAdded = false;
+                databaseHelper.deleteMovie(persistMovie);
+                adapter.removeItem(persistMovie);
                 snackBarText = R.string.movieRemoved;
             } else{
                 castedView.setImageResource(R.drawable.check);
-                currentItem.isAdded = true;
+                databaseHelper.addMovie(currentItem);
+                adapter.addItem(currentItem);
                 snackBarText = R.string.movieAdded;
             }
 
@@ -67,7 +80,6 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
 
         @Override
         public void onClick(View v) {
-
             // Code to undo the user's last action
         }
     }
@@ -81,12 +93,14 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
         TextView titleTextView;
         ImageView moviePoster;
         ImageButton addRemoveButton;
+        Context context;
 
         SearchMovieViewHolder(View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.movieTitle);
             moviePoster = itemView.findViewById(R.id.moviePoster);
             addRemoveButton = itemView.findViewById(R.id.addRemoveButton);
+            context = itemView.getContext();
         }
     }
 }

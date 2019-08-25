@@ -27,9 +27,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
         String title = mContext.getString(TAB_TITLES[position]);
         switch (position) {
             case 0:
-                return SearchMovieFragment.newInstance(0, title);
-            case 1:
                 return AddedMovieFragment.newInstance(0, title);
+            case 1:
+                return SearchMovieFragment.newInstance(0, title);
             default:
                 return null;
         }

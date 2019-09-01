@@ -1,4 +1,4 @@
-package com.example.themoviedb.database;
+package com.example.themoviedb.persistence;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.themoviedb.models.Movie;
+import com.example.themoviedb.models.MovieModel;
 
 import java.util.ArrayList;
 
@@ -57,7 +57,7 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Movie getMovie(String title){
+    public MovieModel getMovie(String title){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selection = KEY_MOVIE_TITLE + " = ?";
@@ -74,7 +74,7 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
         );
 
         if (cursor.moveToFirst()){
-            Movie movie = new Movie();
+            MovieModel movie = new MovieModel();
 
             movie.title = cursor.getString(cursor.getColumnIndex(KEY_MOVIE_TITLE));
             movie.posterPath = cursor.getString(cursor.getColumnIndex(KEY_MOVIE_POSTER_PATH));
@@ -89,10 +89,10 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public ArrayList<Movie> getAllMovies(boolean onlyWatched){
+    public ArrayList<MovieModel> getAllMovies(boolean onlyWatched){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        ArrayList<Movie> list = new ArrayList<>();
+        ArrayList<MovieModel> list = new ArrayList<>();
 
         String selection = KEY_MOVIE_IS_WATCHED + " = ?";
         String[] selectionArgs = { "1" };
@@ -109,7 +109,7 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
 
             if (cursor.moveToFirst()) {
                 do {
-                    Movie movie = new Movie();
+                    MovieModel movie = new MovieModel();
 
                     movie.title = cursor.getString(cursor.getColumnIndex(KEY_MOVIE_TITLE));
                     movie.posterPath = cursor.getString(cursor.getColumnIndex(KEY_MOVIE_POSTER_PATH));
@@ -124,7 +124,7 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public void addMovie(Movie movie){
+    public void addMovie(MovieModel movie){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -136,7 +136,7 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_MOVIES, null, values);
     }
 
-    public void updateMovie(Movie movie) {
+    public void updateMovie(MovieModel movie) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -147,7 +147,7 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(movie.title)});
     }
 
-    public void deleteMovie(Movie movie){
+    public void deleteMovie(MovieModel movie){
         SQLiteDatabase db = this.getWritableDatabase();
 
         String selection = KEY_MOVIE_ID + " = ?";

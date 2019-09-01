@@ -12,19 +12,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.R;
-import com.example.themoviedb.database.MoviesDatabaseHelper;
-import com.example.themoviedb.models.Movie;
+import com.example.themoviedb.Utilities;
+import com.example.themoviedb.persistence.MoviesDatabaseHelper;
+import com.example.themoviedb.models.MovieModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class WatchedMovieAdapter extends RecyclerView.Adapter<WatchedMovieAdapter.WatchedMovieViewHolder> {
-    private ArrayList<Movie> mMovies;
+    private ArrayList<MovieModel> mMovies;
 
     public WatchedMovieAdapter(){
         mMovies = new ArrayList<>();
     }
 
-    public void setMovies(ArrayList<Movie> movies){
+    public void setMovies(ArrayList<MovieModel> movies){
         mMovies.clear();
         mMovies.addAll(movies);
         notifyDataSetChanged();
@@ -39,9 +41,11 @@ public class WatchedMovieAdapter extends RecyclerView.Adapter<WatchedMovieAdapte
 
     @Override
     public void onBindViewHolder(@NonNull WatchedMovieViewHolder viewHolder, int index) {
-        final Movie currentItem = mMovies.get(index);
+        final MovieModel currentItem = mMovies.get(index);
 
-        currentItem.setPoster(viewHolder.moviePoster);
+        Picasso.get()
+                .load(Utilities.getMoviePosterLink(viewHolder.context, currentItem.posterPath))
+                .into(viewHolder.moviePoster);
         viewHolder.titleTextView.setText(currentItem.title);
         viewHolder.likeDislikeBtn.setImageResource(currentItem.rating
                 ? R.drawable.thumb_up

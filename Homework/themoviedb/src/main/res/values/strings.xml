@@ -12,4 +12,9 @@
     <string name="add_to_watched">Add to Watched</string>
     <string name="rate_movie">Rate movie</string>
     <string name="like_dislike_image">Like/dislike image</string>
+    <string name="posterLink">https://image.tmdb.org/t/p/w185/</string>
+    <string name="rating_question">Did you like this movie?</string>
+    <string name="yes_answer">Yes</string>
+    <string name="no_answer">No</string>
+    <string name="movies_db_name">MoviesDatabase.db</string>
 </resources>

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class MovieResponse {
 
     @SerializedName("results")
-    private ArrayList<Movie> movies;
+    private ArrayList<MovieModel> movies;
 
-    public ArrayList<Movie> getMovies() { return movies; }
+    public ArrayList<MovieModel> getMovies() { return movies; }
 }

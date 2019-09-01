@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.R;
 import com.example.themoviedb.SearchActivity;
-import com.example.themoviedb.database.MoviesDatabaseHelper;
+import com.example.themoviedb.persistence.MoviesDatabaseHelper;
 import com.example.themoviedb.recyclerView.WatchlistMovieAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

@@ -12,20 +12,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.R;
-import com.example.themoviedb.database.MoviesDatabaseHelper;
-import com.example.themoviedb.models.Movie;
+import com.example.themoviedb.Utilities;
+import com.example.themoviedb.models.MovieModel;
+import com.example.themoviedb.persistence.MoviesDatabaseHelper;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder> {
-    private ArrayList<Movie> mMovies;
+    private ArrayList<MovieModel> mMovies;
 
     public SearchMovieAdapter(){
         mMovies = new ArrayList<>();
     }
 
-    public void setMovies(ArrayList<Movie> movies){
+    public void setMovies(ArrayList<MovieModel> movies){
         mMovies.clear();
         mMovies.addAll(movies);
         notifyDataSetChanged();
@@ -40,14 +42,16 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull SearchMovieViewHolder viewHolder, int i) {
-        final Movie currentItem = mMovies.get(i);
+        final MovieModel currentItem = mMovies.get(i);
 
-        currentItem.setPoster(viewHolder.moviePoster);
+        Picasso.get()
+                .load(Utilities.getMoviePosterLink(viewHolder.context, currentItem.posterPath))
+                .into(viewHolder.moviePoster);
         viewHolder.titleTextView.setText(currentItem.title);
 
         MoviesDatabaseHelper databaseHelper = MoviesDatabaseHelper.getInstance(viewHolder.context);
 
-        Movie addedMovie = databaseHelper.getMovie(currentItem.title);
+        MovieModel addedMovie = databaseHelper.getMovie(currentItem.title);
         viewHolder.addRemoveButton.setImageResource(addedMovie != null
                 ? R.drawable.check
                 : R.drawable.plus);
@@ -56,7 +60,7 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
             final ImageButton castedView = (ImageButton)view;
 
             int snackBarText;
-            Movie persistMovie = databaseHelper.getMovie(currentItem.title);
+            MovieModel persistMovie = databaseHelper.getMovie(currentItem.title);
             if (persistMovie != null){
                 castedView.setImageResource(R.drawable.plus);
                 databaseHelper.deleteMovie(persistMovie);

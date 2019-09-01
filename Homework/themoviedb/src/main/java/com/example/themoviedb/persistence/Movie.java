@@ -6,6 +6,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.example.themoviedb.models.MovieModel;
+
 import java.util.UUID;
 
 @Entity(tableName = "movies")
@@ -14,53 +16,67 @@ public class Movie {
     @NonNull
     @PrimaryKey
     @ColumnInfo(name = "movieid")
-    private String mId;
+    private String id;
 
     @ColumnInfo(name = "posterPath")
-    private String mPosterPath;
+    private String posterPath;
 
     @ColumnInfo(name = "title")
-    private String mTitle;
+    private String title;
 
     @ColumnInfo(name = "rating")
-    private boolean mRating;
+    private boolean rating;
 
     @ColumnInfo(name = "iswatched")
-    private boolean mIsWatched;
+    private boolean isWatched;
 
     @Ignore
     public Movie(String title) {
-        this.mId = UUID.randomUUID().toString();
-        this.mTitle = title;
-        this.mIsWatched = false;
-        this.mRating = false;
+        this.id = UUID.randomUUID().toString();
+        this.title = title;
+        this.isWatched = false;
+        this.rating = false;
     }
 
-    public Movie(String id, String title, String posterPath, Boolean isWatched, Boolean rating) {
-        this.mId = id;
-        this.mTitle = title;
-        this.mPosterPath = posterPath;
-        this.mIsWatched = isWatched;
-        this.mRating = rating;
+    public Movie(String id, String title, String posterPath) {
+        this.id = id;
+        this.title = title;
+        this.posterPath = posterPath;
+    }
+
+    public Movie(MovieModel movieModel) {
+        this.id = UUID.randomUUID().toString();
+        this.title = movieModel.title;
+        this.posterPath = movieModel.posterPath;
+        this.isWatched = false;
+        this.rating = false;
     }
 
     public String getPosterPath() {
-        return mPosterPath;
+        return posterPath;
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public boolean getRating() {
-        return mRating;
+        return rating;
+    }
+
+    public void setRating(Boolean rating) {
+        this.rating = rating;
     }
 
     public boolean getIsWatched() {
-        return mIsWatched;
+        return isWatched;
+    }
+
+    public void setIsWatched(Boolean isWatched) {
+        this.isWatched = isWatched;
     }
 
     public String getId() {
-        return mId;
+        return id;
     }
 }

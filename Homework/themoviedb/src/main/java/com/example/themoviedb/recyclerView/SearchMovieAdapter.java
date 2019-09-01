@@ -1,5 +1,6 @@
 package com.example.themoviedb.recyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +12,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.themoviedb.Injection;
+import com.example.themoviedb.MovieDataSource;
 import com.example.themoviedb.R;
 import com.example.themoviedb.Utilities;
 import com.example.themoviedb.models.MovieModel;
-import com.example.themoviedb.persistence.MoviesDatabaseHelper;
+import com.example.themoviedb.persistence.Movie;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder> {
     private ArrayList<MovieModel> mMovies;
@@ -40,6 +45,7 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
         return new SearchMovieViewHolder(view);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(@NonNull SearchMovieViewHolder viewHolder, int i) {
         final MovieModel currentItem = mMovies.get(i);
@@ -49,31 +55,36 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
                 .into(viewHolder.moviePoster);
         viewHolder.titleTextView.setText(currentItem.title);
 
-        MoviesDatabaseHelper databaseHelper = MoviesDatabaseHelper.getInstance(viewHolder.context);
+        MovieDataSource dataSource = Injection.provideMovieDataSource(viewHolder.context);
 
-        MovieModel addedMovie = databaseHelper.getMovie(currentItem.title);
-        viewHolder.addRemoveButton.setImageResource(addedMovie != null
-                ? R.drawable.check
-                : R.drawable.plus);
+        dataSource.getMovie(currentItem.title)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(addedMovie -> viewHolder.addRemoveButton.setImageResource(addedMovie != null
+                        ? R.drawable.check
+                        : R.drawable.plus));
 
         viewHolder.addRemoveButton.setOnClickListener((view)->{
             final ImageButton castedView = (ImageButton)view;
 
-            int snackBarText;
-            MovieModel persistMovie = databaseHelper.getMovie(currentItem.title);
-            if (persistMovie != null){
-                castedView.setImageResource(R.drawable.plus);
-                databaseHelper.deleteMovie(persistMovie);
-                snackBarText = R.string.movieRemoved;
-            } else{
-                castedView.setImageResource(R.drawable.check);
-                databaseHelper.addMovie(currentItem);
-                snackBarText = R.string.movieAdded;
-            }
+            dataSource.getMovie(currentItem.title)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(persistMovie -> {
+                        int snackBarText;
+                        if (persistMovie != null){
+                            castedView.setImageResource(R.drawable.plus);
+                            dataSource.deleteMovie(persistMovie);
+                            snackBarText = R.string.movieRemoved;
+                        } else{
+                            castedView.setImageResource(R.drawable.check);
+                            Movie newMovie = new Movie(currentItem);
+                            dataSource.insertOrUpdateMovie(newMovie);
+                            snackBarText = R.string.movieAdded;
+                        }
 
-            Snackbar snackbar = Snackbar.make(view, snackBarText, Snackbar.LENGTH_LONG);
-            snackbar.setAction(R.string.undoString, new UndoListener());
-            snackbar.show();
+                        Snackbar snackbar = Snackbar.make(view, snackBarText, Snackbar.LENGTH_LONG);
+                        snackbar.setAction(R.string.undoString, new UndoListener());
+                        snackbar.show();
+                    });
         });
     }
 

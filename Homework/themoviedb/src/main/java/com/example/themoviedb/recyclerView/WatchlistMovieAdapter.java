@@ -13,22 +13,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.themoviedb.Injection;
+import com.example.themoviedb.MovieDataSource;
 import com.example.themoviedb.R;
 import com.example.themoviedb.Utilities;
-import com.example.themoviedb.persistence.MoviesDatabaseHelper;
-import com.example.themoviedb.models.MovieModel;
+import com.example.themoviedb.persistence.Movie;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class WatchlistMovieAdapter extends RecyclerView.Adapter<WatchlistMovieAdapter.WatchlistMovieViewHolder> {
-    private ArrayList<MovieModel> mMovies;
+    private ArrayList<Movie> mMovies;
 
     public WatchlistMovieAdapter(){
         mMovies = new ArrayList<>();
     }
 
-    public void setMovies(ArrayList<MovieModel> movies){
+    public void setMovies(List<Movie> movies){
         mMovies.clear();
         mMovies.addAll(movies);
         notifyDataSetChanged();
@@ -43,31 +45,31 @@ public class WatchlistMovieAdapter extends RecyclerView.Adapter<WatchlistMovieAd
 
     @Override
     public void onBindViewHolder(@NonNull WatchlistMovieViewHolder viewHolder, int i) {
-        final MovieModel currentItem = mMovies.get(i);
+        final Movie currentItem = mMovies.get(i);
 
         Picasso.get()
-                .load(Utilities.getMoviePosterLink(viewHolder.context, currentItem.posterPath))
+                .load(Utilities.getMoviePosterLink(viewHolder.context, currentItem.getPosterPath()))
                 .into(viewHolder.moviePoster);
-        viewHolder.titleTextView.setText(currentItem.title);
+        viewHolder.titleTextView.setText(currentItem.getTitle());
         viewHolder.rateButton.setOnClickListener(v -> onClickListener(v, currentItem, i));
     }
 
-    private void onClickListener(View view, MovieModel movie, int index){
+    private void onClickListener(View view, Movie movie, int index){
         Context context = view.getContext();
-        MoviesDatabaseHelper databaseHelper = MoviesDatabaseHelper.getInstance(context);
+        MovieDataSource dataSource = Injection.provideMovieDataSource(context);
         DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
-                    movie.rating = true;
+                    movie.setRating(true);
                     break;
 
                 case DialogInterface.BUTTON_NEGATIVE:
-                    movie.rating = false;
+                    movie.setRating(false);
                     break;
             }
 
-            movie.isWatched = true;
-            databaseHelper.updateMovie(movie);
+            movie.setIsWatched(true);
+            dataSource.insertOrUpdateMovie(movie);
             mMovies.set(index, movie);
         };
 

@@ -62,7 +62,7 @@ public class SearchActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(MovieResponse::getMovies)
-                .subscribe(adapter::setMovies);
+                .subscribe(adapter::setMovies, throwable -> { throw new Error(throwable.getMessage());});
 }
 
     private Observable<String> getObservableQuery(SearchView searchTextView){

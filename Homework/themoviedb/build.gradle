@@ -18,6 +18,12 @@ android {
 
         buildConfigField "String", "THE_MOVIE_DB_API_KEY", '"5708b75e003762dd01fde2ae0ef94021"'
         buildConfigField "String", "THE_MOVIE_DB_URL", '"https://api.themoviedb.org/"'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {

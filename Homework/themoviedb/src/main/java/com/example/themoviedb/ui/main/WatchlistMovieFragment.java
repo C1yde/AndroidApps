@@ -1,5 +1,6 @@
 package com.example.themoviedb.ui.main;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +14,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.themoviedb.Injection;
+import com.example.themoviedb.MovieDataSource;
 import com.example.themoviedb.R;
 import com.example.themoviedb.SearchActivity;
-import com.example.themoviedb.persistence.MoviesDatabaseHelper;
 import com.example.themoviedb.recyclerView.WatchlistMovieAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class WatchlistMovieFragment extends Fragment {
 
@@ -41,6 +45,7 @@ public class WatchlistMovieFragment extends Fragment {
         title = getArguments().getString("someTitle");
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
@@ -66,13 +71,11 @@ public class WatchlistMovieFragment extends Fragment {
             context.startActivity(intent);
         });
 
-        reloadWatchlist();
+        MovieDataSource dataSource = Injection.provideMovieDataSource(this.getContext());
+        dataSource.getAllMovies()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(adapter::setMovies);
 
         return root;
-    }
-
-    public void reloadWatchlist() {
-        MoviesDatabaseHelper databaseHelper = MoviesDatabaseHelper.getInstance(this.getActivity());
-        adapter.setMovies(databaseHelper.getAllMovies(false));
     }
 }

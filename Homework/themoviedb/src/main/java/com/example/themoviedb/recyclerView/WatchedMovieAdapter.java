@@ -11,22 +11,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.themoviedb.Injection;
+import com.example.themoviedb.MovieDataSource;
 import com.example.themoviedb.R;
 import com.example.themoviedb.Utilities;
-import com.example.themoviedb.persistence.MoviesDatabaseHelper;
-import com.example.themoviedb.models.MovieModel;
+import com.example.themoviedb.persistence.Movie;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class WatchedMovieAdapter extends RecyclerView.Adapter<WatchedMovieAdapter.WatchedMovieViewHolder> {
-    private ArrayList<MovieModel> mMovies;
+    private ArrayList<Movie> mMovies;
 
     public WatchedMovieAdapter(){
         mMovies = new ArrayList<>();
     }
 
-    public void setMovies(ArrayList<MovieModel> movies){
+    public void setMovies(List<Movie> movies){
         mMovies.clear();
         mMovies.addAll(movies);
         notifyDataSetChanged();
@@ -41,25 +43,27 @@ public class WatchedMovieAdapter extends RecyclerView.Adapter<WatchedMovieAdapte
 
     @Override
     public void onBindViewHolder(@NonNull WatchedMovieViewHolder viewHolder, int index) {
-        final MovieModel currentItem = mMovies.get(index);
+        final Movie currentItem = mMovies.get(index);
 
         Picasso.get()
-                .load(Utilities.getMoviePosterLink(viewHolder.context, currentItem.posterPath))
+                .load(Utilities.getMoviePosterLink(viewHolder.context, currentItem.getPosterPath()))
                 .into(viewHolder.moviePoster);
-        viewHolder.titleTextView.setText(currentItem.title);
-        viewHolder.likeDislikeBtn.setImageResource(currentItem.rating
+        viewHolder.titleTextView.setText(currentItem.getTitle());
+        viewHolder.likeDislikeBtn.setImageResource(currentItem.getRating()
                 ? R.drawable.thumb_up
                 : R.drawable.thumb_down);
 
-        MoviesDatabaseHelper databaseHelper = MoviesDatabaseHelper.getInstance(viewHolder.context);
-
         viewHolder.likeDislikeBtn.setOnClickListener((view)->{
             ImageButton castedView = (ImageButton)view;
-            castedView.setImageResource(currentItem.rating
+            boolean rating = currentItem.getRating();
+            castedView.setImageResource(rating
                     ? R.drawable.thumb_down
                     : R.drawable.thumb_up);
-            currentItem.rating = !currentItem.rating;
-            databaseHelper.updateMovie(currentItem);
+            currentItem.setRating(!rating);
+
+            MovieDataSource dataSource = Injection.provideMovieDataSource(viewHolder.context);
+            dataSource.insertOrUpdateMovie(currentItem);
+
             mMovies.set(index, currentItem);
         });
     }

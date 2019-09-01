@@ -1,5 +1,6 @@
 package com.example.themoviedb.ui.main;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.themoviedb.Injection;
+import com.example.themoviedb.MovieDataSource;
 import com.example.themoviedb.R;
-import com.example.themoviedb.persistence.MoviesDatabaseHelper;
 import com.example.themoviedb.recyclerView.WatchedMovieAdapter;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class WatchedMovieFragment extends Fragment {
 
@@ -37,6 +41,7 @@ public class WatchedMovieFragment extends Fragment {
         title = getArguments().getString("someTitle");
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
@@ -55,13 +60,11 @@ public class WatchedMovieFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        reloadWatchedMovies();
+        MovieDataSource dataSource = Injection.provideMovieDataSource(this.getContext());
+        dataSource.getWatchedMovies()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(adapter::setMovies);
 
         return root;
-    }
-
-    public void reloadWatchedMovies() {
-        MoviesDatabaseHelper databaseHelper = MoviesDatabaseHelper.getInstance(this.getActivity());
-        adapter.setMovies(databaseHelper.getAllMovies(true));
     }
 }

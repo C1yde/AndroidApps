@@ -7,7 +7,7 @@ import com.example.themoviedb.persistence.MoviesDatabase;
 
 public class Injection {
 
-    public static MovieDataSource provideUserDataSource(Context context) {
+    public static MovieDataSource provideMovieDataSource(Context context) {
         MoviesDatabase database = MoviesDatabase.getInstance(context);
         return new LocalMovieDataSource(database.movieDao());
     }

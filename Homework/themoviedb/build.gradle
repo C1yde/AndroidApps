@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    apply plugin: 'kotlin-kapt'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.google.code.gson:gson:2.8.5'
@@ -72,6 +73,10 @@ dependencies {
     implementation "androidx.core:core-ktx:1.0.2"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    kapt "android.arch.persistence.room:compiler:1.1.1"
+    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
+    testImplementation 'android.arch.persistence.room:testing:1.1.1'
 }
 repositories {
     mavenCentral()

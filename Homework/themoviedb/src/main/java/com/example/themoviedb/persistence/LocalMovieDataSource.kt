@@ -1,8 +1,6 @@
 package com.example.themoviedb.persistence
 
 import com.example.themoviedb.MovieDataSource
-
-import io.reactivex.Completable
 import io.reactivex.Flowable
 
 class LocalMovieDataSource(private val mMovieDao: MovieDao) : MovieDataSource {
@@ -17,11 +15,11 @@ class LocalMovieDataSource(private val mMovieDao: MovieDao) : MovieDataSource {
         return mMovieDao.getMovie(title)
     }
 
-    override fun insertOrUpdateMovie(movie: Movie): Completable {
+    override fun insertOrUpdateMovie(movie: Movie): Long {
         return mMovieDao.insertMovie(movie)
     }
 
-    override fun deleteMovie(movie: Movie): Completable {
+    override fun deleteMovie(movie: Movie): Int {
         return mMovieDao.deleteMovie(movie)
     }
 }

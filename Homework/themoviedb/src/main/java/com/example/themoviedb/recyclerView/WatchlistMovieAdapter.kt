@@ -46,12 +46,11 @@ class WatchlistMovieAdapter : RecyclerView.Adapter<WatchlistMovieAdapter.Watchli
         val dataSource = Injection.provideMovieDataSource(context)
         val dialogClickListener = DialogInterface.OnClickListener{ _: DialogInterface, which: Int ->
             when (which) {
-                DialogInterface.BUTTON_POSITIVE -> movie.setRating(true)
-
-                DialogInterface.BUTTON_NEGATIVE -> movie.setRating(false)
+                DialogInterface.BUTTON_POSITIVE -> movie.rating = true
+                DialogInterface.BUTTON_NEGATIVE -> movie.rating = false
             }
 
-            movie.setIsWatched(true)
+            movie.isWatched = true
             dataSource.insertOrUpdateMovie(movie)
             mMovies[index] = movie
         }

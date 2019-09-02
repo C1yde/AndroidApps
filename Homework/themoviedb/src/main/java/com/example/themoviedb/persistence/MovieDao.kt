@@ -1,7 +1,6 @@
 package com.example.themoviedb.persistence
 
 import androidx.room.*
-import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
@@ -17,8 +16,8 @@ interface MovieDao {
     fun getMovie(title: String?): Flowable<Movie>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovie(movie: Movie): Completable
+    fun insertMovie(movie: Movie): Long
 
     @Delete
-    fun deleteMovie(movie: Movie): Completable
+    fun deleteMovie(movie: Movie): Int
 }

@@ -1,8 +1,6 @@
 package com.example.themoviedb
 
 import com.example.themoviedb.persistence.Movie
-
-import io.reactivex.Completable
 import io.reactivex.Flowable
 
 interface MovieDataSource {
@@ -13,7 +11,7 @@ interface MovieDataSource {
 
     fun getMovie(title: String?): Flowable<Movie>
 
-    fun insertOrUpdateMovie(movie: Movie): Completable
+    fun insertOrUpdateMovie(movie: Movie): Long
 
-    fun deleteMovie(movie: Movie): Completable
+    fun deleteMovie(movie: Movie): Int
 }

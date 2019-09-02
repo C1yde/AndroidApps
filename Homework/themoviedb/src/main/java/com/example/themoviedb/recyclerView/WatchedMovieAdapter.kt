@@ -48,7 +48,7 @@ class WatchedMovieAdapter : RecyclerView.Adapter<WatchedMovieAdapter.WatchedMovi
                 R.drawable.thumb_down
             else
                 R.drawable.thumb_up)
-            currentItem.setRating(!rating)
+            currentItem.rating = !rating
 
             val dataSource = Injection.provideMovieDataSource(viewHolder.context)
             dataSource.insertOrUpdateMovie(currentItem)

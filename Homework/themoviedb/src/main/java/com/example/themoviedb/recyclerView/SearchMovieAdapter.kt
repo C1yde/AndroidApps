@@ -16,8 +16,11 @@ import com.example.themoviedb.models.MovieModel
 import com.example.themoviedb.persistence.Movie
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableMaybeObserver
+import io.reactivex.schedulers.Schedulers
 import java.util.*
+
+
 
 class SearchMovieAdapter : RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder>() {
     private val mMovies: ArrayList<MovieModel> = ArrayList()
@@ -45,7 +48,7 @@ class SearchMovieAdapter : RecyclerView.Adapter<SearchMovieAdapter.SearchMovieVi
         val dataSource = Injection.provideMovieDataSource(viewHolder.context)
 
         dataSource.getMovie(currentItem.title)
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe { addedMovie ->
                     viewHolder.addRemoveButton.setImageResource(if (addedMovie != null)
                         R.drawable.check
@@ -57,24 +60,30 @@ class SearchMovieAdapter : RecyclerView.Adapter<SearchMovieAdapter.SearchMovieVi
             val castedView = view as ImageButton
 
             dataSource.getMovie(currentItem.title)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { persistMovie ->
-                        val snackBarText: Int
-                        if (persistMovie != null) {
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(object : DisposableMaybeObserver<Movie>() {
+                        override fun onSuccess(movie: Movie) {
                             castedView.setImageResource(R.drawable.plus)
-                            dataSource.deleteMovie(persistMovie)
-                            snackBarText = R.string.movieRemoved
-                        } else {
-                            castedView.setImageResource(R.drawable.check)
-                            val newMovie = Movie(currentItem)
-                            dataSource.insertOrUpdateMovie(newMovie)
-                            snackBarText = R.string.movieAdded
+                            dataSource.deleteMovie(movie)
+
+                            val snackBar = Snackbar.make(view, R.string.movieRemoved, Snackbar.LENGTH_LONG)
+                            snackBar.setAction(R.string.undoString, UndoListener())
+                            snackBar.show()
                         }
 
-                        val snackbar = Snackbar.make(view, snackBarText, Snackbar.LENGTH_LONG)
-                        snackbar.setAction(R.string.undoString, UndoListener())
-                        snackbar.show()
-                    }
+                        override fun onComplete() {
+                            castedView.setImageResource(R.drawable.check)
+                            val newMovie = Movie(currentItem)
+                            dataSource.insertMovie(newMovie)
+
+                            val snackBar = Snackbar.make(view, R.string.movieAdded, Snackbar.LENGTH_LONG)
+                            snackBar.setAction(R.string.undoString, UndoListener())
+                            snackBar.show()
+                        }
+
+                        override fun onError(e: Throwable) {
+                        }
+                    })
         }
     }
 

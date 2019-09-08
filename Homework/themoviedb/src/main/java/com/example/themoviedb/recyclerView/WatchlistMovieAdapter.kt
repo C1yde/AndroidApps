@@ -51,7 +51,7 @@ class WatchlistMovieAdapter : RecyclerView.Adapter<WatchlistMovieAdapter.Watchli
             }
 
             movie.isWatched = true
-            dataSource.insertOrUpdateMovie(movie)
+            dataSource.updateMovie(movie)
             mMovies[index] = movie
         }
 

@@ -1,7 +1,9 @@
 package com.example.themoviedb.persistence
 
 import androidx.room.*
+import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 
 @Dao
 interface MovieDao {
@@ -13,10 +15,13 @@ interface MovieDao {
     val watchedMovies: Flowable<List<Movie>>
 
     @Query("SELECT * FROM movies WHERE title == (:title)")
-    fun getMovie(title: String?): Flowable<Movie>
+    fun getMovie(title: String?): Maybe<Movie>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovie(movie: Movie): Long
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertMovie(movie: Movie): Completable
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun updateMovie(movie: Movie): Completable
 
     @Delete
     fun deleteMovie(movie: Movie): Int

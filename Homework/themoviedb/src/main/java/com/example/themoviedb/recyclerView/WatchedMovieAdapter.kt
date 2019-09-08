@@ -51,7 +51,7 @@ class WatchedMovieAdapter : RecyclerView.Adapter<WatchedMovieAdapter.WatchedMovi
             currentItem.rating = !rating
 
             val dataSource = Injection.provideMovieDataSource(viewHolder.context)
-            dataSource.insertOrUpdateMovie(currentItem)
+            dataSource.updateMovie(currentItem)
 
             mMovies[index] = currentItem
         }

@@ -1,5 +1,6 @@
 package com.example.themoviedb.ui.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -8,14 +9,15 @@ import androidx.fragment.app.FragmentPagerAdapter
 
 import com.example.themoviedb.R
 
-class PagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
+@SuppressLint("WrongConstant")
+class PagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    override fun getItem(position: Int): Fragment? {
+    override fun getItem(position: Int): Fragment {
         val title = mContext.getString(TAB_TITLES[position])
-        return when (position) {
-            0 -> WatchlistMovieFragment.newInstance(0, title)
-            1 -> WatchedMovieFragment.newInstance(0, title)
-            else -> null
+        return if (position == 0) {
+            WatchlistMovieFragment.newInstance(position, title)
+        } else {
+            WatchedMovieFragment.newInstance(position, title)
         }
     }
 

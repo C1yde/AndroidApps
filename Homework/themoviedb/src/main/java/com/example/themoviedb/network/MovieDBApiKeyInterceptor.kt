@@ -10,7 +10,7 @@ class MovieDBApiKeyInterceptor : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val original = chain.request()
-        val originalHttpUrl = original.url()
+        val originalHttpUrl = original.url
         val url = originalHttpUrl.newBuilder()
                 .addQueryParameter("api_key", BuildConfig.THE_MOVIE_DB_API_KEY)
                 .build()

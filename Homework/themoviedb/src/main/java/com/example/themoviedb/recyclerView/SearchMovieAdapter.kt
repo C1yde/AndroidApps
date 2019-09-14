@@ -16,6 +16,8 @@ import com.example.themoviedb.models.MovieModel
 import com.example.themoviedb.persistence.Movie
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
+import io.reactivex.CompletableObserver
+import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableMaybeObserver
 import io.reactivex.schedulers.Schedulers
 import java.util.*
@@ -66,25 +68,36 @@ class SearchMovieAdapter : RecyclerView.Adapter<SearchMovieAdapter.SearchMovieVi
                             castedView.setImageResource(R.drawable.plus)
                             dataSource.deleteMovie(movie)
 
-                            val snackBar = Snackbar.make(view, R.string.movieRemoved, Snackbar.LENGTH_LONG)
-                            snackBar.setAction(R.string.undoString, UndoListener())
-                            snackBar.show()
+                            showSnackBar(view, R.string.movieRemoved)
                         }
 
                         override fun onComplete() {
                             castedView.setImageResource(R.drawable.check)
                             val newMovie = Movie(currentItem)
                             dataSource.insertMovie(newMovie)
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe(object : CompletableObserver{
+                                        override fun onError(e: Throwable) {
+                                        }
+                                        override fun onSubscribe(d: Disposable) {
+                                        }
+                                        override fun onComplete() {
+                                            showSnackBar(view, R.string.movieAdded)
+                                        }
 
-                            val snackBar = Snackbar.make(view, R.string.movieAdded, Snackbar.LENGTH_LONG)
-                            snackBar.setAction(R.string.undoString, UndoListener())
-                            snackBar.show()
+                                    })
                         }
 
                         override fun onError(e: Throwable) {
                         }
                     })
         }
+    }
+
+    fun showSnackBar(view: View, titleResourceId: Int){
+        val snackBar = Snackbar.make(view, titleResourceId, Snackbar.LENGTH_LONG)
+        snackBar.setAction(R.string.undoString, UndoListener())
+        snackBar.show()
     }
 
     inner class UndoListener : View.OnClickListener {

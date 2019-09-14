@@ -15,6 +15,9 @@ import com.example.themoviedb.R
 import com.example.themoviedb.Utilities
 import com.example.themoviedb.persistence.Movie
 import com.squareup.picasso.Picasso
+import io.reactivex.CompletableObserver
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class WatchlistMovieAdapter : RecyclerView.Adapter<WatchlistMovieAdapter.WatchlistMovieViewHolder>() {
@@ -52,7 +55,17 @@ class WatchlistMovieAdapter : RecyclerView.Adapter<WatchlistMovieAdapter.Watchli
 
             movie.isWatched = true
             dataSource.updateMovie(movie)
-            mMovies[index] = movie
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(object : CompletableObserver {
+                        override fun onError(e: Throwable) {
+                        }
+                        override fun onSubscribe(d: Disposable) {
+                        }
+                        override fun onComplete() {
+                            mMovies[index] = movie
+                        }
+
+                    })
         }
 
         val builder = AlertDialog.Builder(context)

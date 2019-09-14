@@ -41,10 +41,7 @@ class WatchedMovieFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
 
-        val dataSource = Injection.provideMovieDataSource(this.context)
-        dataSource.watchedMovies
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { adapter!!.setMovies(it) }
+        updateMovies()
 
         return root
     }
@@ -62,5 +59,18 @@ class WatchedMovieFragment : Fragment() {
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    @SuppressLint("CheckResult")
+    fun updateMovies(){
+        val dataSource = Injection.provideMovieDataSource(this.context)
+        dataSource.watchedMovies
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { adapter!!.setMovies(it) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateMovies()
     }
 }

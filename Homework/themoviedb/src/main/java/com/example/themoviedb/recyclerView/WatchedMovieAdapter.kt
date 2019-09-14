@@ -13,6 +13,9 @@ import com.example.themoviedb.R
 import com.example.themoviedb.Utilities
 import com.example.themoviedb.persistence.Movie
 import com.squareup.picasso.Picasso
+import io.reactivex.CompletableObserver
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class WatchedMovieAdapter : RecyclerView.Adapter<WatchedMovieAdapter.WatchedMovieViewHolder>() {
@@ -44,16 +47,25 @@ class WatchedMovieAdapter : RecyclerView.Adapter<WatchedMovieAdapter.WatchedMovi
         viewHolder.likeDislikeBtn.setOnClickListener { view ->
             val castedView = view as ImageButton
             val rating = currentItem.rating
-            castedView.setImageResource(if (rating)
-                R.drawable.thumb_down
-            else
-                R.drawable.thumb_up)
             currentItem.rating = !rating
 
             val dataSource = Injection.provideMovieDataSource(viewHolder.context)
             dataSource.updateMovie(currentItem)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(object : CompletableObserver {
+                        override fun onError(e: Throwable) {
+                        }
+                        override fun onSubscribe(d: Disposable) {
+                        }
+                        override fun onComplete() {
+                            castedView.setImageResource(if (rating)
+                                R.drawable.thumb_down
+                            else
+                                R.drawable.thumb_up)
 
-            mMovies[index] = currentItem
+                            mMovies[index] = currentItem
+                        }
+                    })
         }
     }
 

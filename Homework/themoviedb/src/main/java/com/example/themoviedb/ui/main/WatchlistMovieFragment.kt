@@ -25,7 +25,7 @@ class WatchlistMovieFragment : Fragment() {
         title = arguments!!.getString("someTitle")
     }
 
-    @SuppressLint("CheckResult")
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
@@ -50,10 +50,7 @@ class WatchlistMovieFragment : Fragment() {
             context.startActivity(intent)
         }
 
-        val dataSource = Injection.provideMovieDataSource(this.context)
-        dataSource.allMovies
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { adapter!!.setMovies(it) }
+        updateMovies()
 
         return root
     }
@@ -72,5 +69,18 @@ class WatchlistMovieFragment : Fragment() {
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    @SuppressLint("CheckResult")
+    fun updateMovies(){
+        val dataSource = Injection.provideMovieDataSource(this.context)
+        dataSource.allMovies
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { adapter!!.setMovies(it) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateMovies()
     }
 }

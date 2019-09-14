@@ -6,8 +6,8 @@ import com.example.themoviedb.models.MovieModel
 
 @Entity(tableName = "movies")
 data class Movie (
-    @PrimaryKey
-    var id: Int? = 0,
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
     var posterPath: String? = null,
     var title: String? = null,
     var rating: Boolean = false,

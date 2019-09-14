@@ -11,7 +11,7 @@ interface MovieDao {
     @get:Query("SELECT * FROM movies")
     val allMovies: Flowable<List<Movie>>
 
-    @get:Query("SELECT * FROM movies WHERE iswatched == 1")
+    @get:Query("SELECT * FROM movies WHERE isWatched == 1")
     val watchedMovies: Flowable<List<Movie>>
 
     @Query("SELECT * FROM movies WHERE title == (:title)")
@@ -20,7 +20,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMovie(movie: Movie): Completable
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Update(onConflict = OnConflictStrategy.IGNORE)
     fun updateMovie(movie: Movie): Completable
 
     @Delete

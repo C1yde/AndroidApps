@@ -1,18 +1,18 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "621b022b114fb3334e205f80279bcc31",
+    "version": 2,
+    "identityHash": "c454e54fd923f9755f98027bcb20bf14",
     "entities": [
       {
         "tableName": "movies",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `posterPath` TEXT, `title` TEXT, `rating` INTEGER NOT NULL, `isWatched` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `posterPath` TEXT, `title` TEXT, `rating` INTEGER NOT NULL, `isWatched` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "posterPath",
@@ -52,7 +52,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '621b022b114fb3334e205f80279bcc31')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c454e54fd923f9755f98027bcb20bf14')"
     ]
   }
 }

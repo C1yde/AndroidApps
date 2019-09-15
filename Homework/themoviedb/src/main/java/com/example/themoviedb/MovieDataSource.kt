@@ -17,5 +17,5 @@ interface MovieDataSource {
 
     fun updateMovie(movie: Movie): Completable
 
-    fun deleteMovie(movie: Movie): Int
+    fun deleteMovie(movie: Movie): Completable
 }

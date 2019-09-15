@@ -15,7 +15,6 @@ import com.example.themoviedb.Utilities
 import com.example.themoviedb.models.MovieModel
 import com.example.themoviedb.persistence.Movie
 import com.google.android.material.snackbar.Snackbar
-import com.squareup.picasso.Picasso
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableMaybeObserver
@@ -42,9 +41,7 @@ class SearchMovieAdapter : RecyclerView.Adapter<SearchMovieAdapter.SearchMovieVi
     override fun onBindViewHolder(viewHolder: SearchMovieViewHolder, i: Int) {
         val currentItem = mMovies[i]
 
-        Picasso.get()
-                .load(Utilities.getMoviePosterLink(viewHolder.context, currentItem.posterPath))
-                .into(viewHolder.moviePoster)
+        Utilities.setImageResource(viewHolder.context, viewHolder.moviePoster, currentItem.posterPath)
         viewHolder.titleTextView.text = currentItem.title
 
         val dataSource = Injection.provideMovieDataSource(viewHolder.context)
@@ -65,14 +62,34 @@ class SearchMovieAdapter : RecyclerView.Adapter<SearchMovieAdapter.SearchMovieVi
                     .subscribeOn(Schedulers.io())
                     .subscribe(object : DisposableMaybeObserver<Movie>() {
                         override fun onSuccess(movie: Movie) {
-                            castedView.setImageResource(R.drawable.plus)
                             dataSource.deleteMovie(movie)
-
-                            showSnackBar(view, R.string.movieRemoved)
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe(object : CompletableObserver {
+                                        override fun onError(e: Throwable) {
+                                        }
+                                        override fun onSubscribe(d: Disposable) {
+                                        }
+                                        override fun onComplete() {
+                                            castedView.setImageResource(R.drawable.plus)
+                                            showSnackBar(view, R.string.movieRemoved, View.OnClickListener {
+                                                val newMovie = Movie(currentItem)
+                                                dataSource.insertMovie(newMovie)
+                                                        .subscribeOn(Schedulers.io())
+                                                        .subscribe(object : CompletableObserver{
+                                                            override fun onError(e: Throwable) {
+                                                            }
+                                                            override fun onSubscribe(d: Disposable) {
+                                                            }
+                                                            override fun onComplete() {
+                                                                castedView.setImageResource(R.drawable.check)
+                                                            }
+                                                        })
+                                            })
+                                        }
+                                    })
                         }
 
                         override fun onComplete() {
-                            castedView.setImageResource(R.drawable.check)
                             val newMovie = Movie(currentItem)
                             dataSource.insertMovie(newMovie)
                                     .subscribeOn(Schedulers.io())
@@ -82,9 +99,31 @@ class SearchMovieAdapter : RecyclerView.Adapter<SearchMovieAdapter.SearchMovieVi
                                         override fun onSubscribe(d: Disposable) {
                                         }
                                         override fun onComplete() {
-                                            showSnackBar(view, R.string.movieAdded)
+                                            castedView.setImageResource(R.drawable.check)
+                                            showSnackBar(view, R.string.movieAdded, View.OnClickListener {
+                                                dataSource.getMovie(currentItem.title)
+                                                        .subscribeOn(Schedulers.io())
+                                                        .subscribe(object : DisposableMaybeObserver<Movie>() {
+                                                            override fun onSuccess(addedMovie: Movie) {
+                                                                dataSource.deleteMovie(addedMovie)
+                                                                        .subscribeOn(Schedulers.io())
+                                                                        .subscribe(object : CompletableObserver {
+                                                                            override fun onError(e: Throwable) {
+                                                                            }
+                                                                            override fun onSubscribe(d: Disposable) {
+                                                                            }
+                                                                            override fun onComplete() {
+                                                                                castedView.setImageResource(R.drawable.plus)
+                                                                            }
+                                                                        })
+                                                            }
+                                                            override fun onComplete() {
+                                                            }
+                                                            override fun onError(e: Throwable) {
+                                                            }
+                                                        })
+                                            })
                                         }
-
                                     })
                         }
 
@@ -94,17 +133,10 @@ class SearchMovieAdapter : RecyclerView.Adapter<SearchMovieAdapter.SearchMovieVi
         }
     }
 
-    fun showSnackBar(view: View, titleResourceId: Int){
+    fun showSnackBar(view: View, titleResourceId: Int, onClickListener: View.OnClickListener){
         val snackBar = Snackbar.make(view, titleResourceId, Snackbar.LENGTH_LONG)
-        snackBar.setAction(R.string.undoString, UndoListener())
+        snackBar.setAction(R.string.undoString, onClickListener)
         snackBar.show()
-    }
-
-    inner class UndoListener : View.OnClickListener {
-
-        override fun onClick(v: View) {
-            // Code to undo the user's last action
-        }
     }
 
     override fun getItemCount(): Int {

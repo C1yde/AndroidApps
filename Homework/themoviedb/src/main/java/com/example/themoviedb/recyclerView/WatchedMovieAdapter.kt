@@ -12,7 +12,6 @@ import com.example.themoviedb.Injection
 import com.example.themoviedb.R
 import com.example.themoviedb.Utilities
 import com.example.themoviedb.persistence.Movie
-import com.squareup.picasso.Picasso
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -35,9 +34,7 @@ class WatchedMovieAdapter : RecyclerView.Adapter<WatchedMovieAdapter.WatchedMovi
     override fun onBindViewHolder(viewHolder: WatchedMovieViewHolder, index: Int) {
         val currentItem = mMovies[index]
 
-        Picasso.get()
-                .load(Utilities.getMoviePosterLink(viewHolder.context, currentItem.posterPath))
-                .into(viewHolder.moviePoster)
+        Utilities.setImageResource(viewHolder.context, viewHolder.moviePoster, currentItem.posterPath)
         viewHolder.titleTextView.text = currentItem.title
         viewHolder.likeDislikeBtn.setImageResource(if (currentItem.rating)
             R.drawable.thumb_up

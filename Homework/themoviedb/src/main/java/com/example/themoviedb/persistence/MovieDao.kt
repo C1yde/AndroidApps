@@ -24,5 +24,5 @@ interface MovieDao {
     fun updateMovie(movie: Movie): Completable
 
     @Delete
-    fun deleteMovie(movie: Movie): Int
+    fun deleteMovie(movie: Movie): Completable
 }

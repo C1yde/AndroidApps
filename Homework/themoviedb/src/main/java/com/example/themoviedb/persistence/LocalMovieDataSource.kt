@@ -25,7 +25,7 @@ class LocalMovieDataSource(private val mMovieDao: MovieDao) : MovieDataSource {
         return mMovieDao.updateMovie(movie)
     }
 
-    override fun deleteMovie(movie: Movie): Int {
+    override fun deleteMovie(movie: Movie): Completable {
         return mMovieDao.deleteMovie(movie)
     }
 }
